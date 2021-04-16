@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ua.tm.neji.core.corpus.Corpus;
 import pt.ua.tm.neji.core.module.*;
+import pt.ua.tm.neji.core.module.Module;
 import pt.ua.tm.neji.core.pipeline.BasePipeline;
 import pt.ua.tm.neji.core.pipeline.Pipeline;
 import pt.ua.tm.neji.exception.NejiException;

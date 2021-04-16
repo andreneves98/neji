@@ -1,0 +1,100 @@
+package pt.ua.tm.neji.usagi;
+
+/*******************************************************************************
+ * Copyright 2019 Observational Health Data Sciences and Informatics
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
+
+import pt.ua.tm.neji.usagi.utilities.files.Row;
+
+
+/**
+ * Class for holding information about a single (target) concept in the Vocabulary
+ */
+@Entity
+public class UsagiConcept {
+	public static UsagiConcept	EMPTY_CONCEPT	= createEmptyConcept();
+
+	@PrimaryKey
+	public int				conceptId;
+	public String			conceptName;
+	public String			domainId;
+	public String			vocabularyId;
+	public String			conceptClassId;
+	public String			standardConcept;
+	public String			conceptCode;
+	public String			validStartDate;
+	public String			validEndDate;
+	public String			invalidReason;
+	public int				parentCount;
+	public int				childCount;
+
+	public String			additionalInformation;
+
+	public UsagiConcept(Row row) {
+		conceptId = row.getInt("concept_id");
+		conceptName = row.get("concept_name");
+		domainId = row.get("domain_id");
+		vocabularyId = row.get("vocabulary_id");
+		conceptClassId = row.get("concept_class_id");
+		standardConcept = row.get("standard_concept");
+		conceptCode = row.get("concept_code");
+		validStartDate = row.get("valid_start_date");
+		validEndDate = row.get("valid_end_date");
+		invalidReason = row.get("invalid_reason");
+		additionalInformation = "";
+	}
+
+	public static UsagiConcept createEmptyConcept() {
+		UsagiConcept concept = new UsagiConcept();
+		concept.conceptId = 0;
+		concept.conceptName = "Unmapped";
+		concept.conceptClassId = "";
+		concept.vocabularyId = "";
+		concept.conceptCode = "";
+		concept.domainId = "";
+		concept.validStartDate = "";
+		concept.validEndDate = "";
+		concept.invalidReason = "";
+		concept.standardConcept = "";
+		concept.additionalInformation = "";
+		concept.parentCount = 0;
+		concept.childCount = 0;
+		return concept;
+	}
+
+	public UsagiConcept() {
+	}
+
+	@Override
+	public String toString() {
+		return "[ConceptId: " + this.conceptId +
+				", ConceptName: " + this.conceptName + 
+				", ConceptClassId: " + this.conceptClassId + 
+				", VocabularyId: " + this.vocabularyId + 
+				", ConceptCode: " + this.conceptCode + 
+				", DomainId: " + this.domainId + 
+				", ValidStartDate: " + this.validStartDate +
+				", ValidEndDate: " + this.validEndDate + 
+				", InvalidReason: " + this.invalidReason + 
+				", StandardConcept: " + this.standardConcept + 
+				", AdditionalInformation: " + this.additionalInformation +
+				", ParentCount: " + this.parentCount + 
+				", ChildCount: " + this.childCount + "]";
+	}
+}

@@ -19,6 +19,7 @@ import pt.ua.tm.neji.core.corpus.Corpus;
 import pt.ua.tm.neji.core.corpus.Sentence;
 import pt.ua.tm.neji.core.corpus.Token;
 import pt.ua.tm.neji.core.module.*;
+import pt.ua.tm.neji.core.module.Module;
 import pt.ua.tm.neji.core.parser.ParserLevel;
 import pt.ua.tm.neji.core.pipeline.PipelineValidator;
 import pt.ua.tm.neji.exception.NejiException;

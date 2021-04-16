@@ -43,6 +43,7 @@ import pt.ua.tm.neji.logger.LoggingOutputStream;
 import pt.ua.tm.neji.ml.MLModel;
 import pt.ua.tm.neji.ml.MLModelsLoader;
 import pt.ua.tm.neji.processor.FileProcessor;
+import pt.ua.tm.neji.sdk.MainSDK;
 import pt.ua.tm.neji.train.config.ModelConfig;
 
 import java.io.*;
@@ -180,7 +181,7 @@ public class Main {
         formatter.printHelp(150, "./neji.sh " + USAGE, HEADER, options, EXAMPLES + FOOTER);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NejiException, IOException {
 //        installUncaughtExceptionHandler();
 
         int NUM_THREADS = Runtime.getRuntime().availableProcessors() - 1;
@@ -575,6 +576,7 @@ public class Main {
                     parserFolder // Parser folder
             );
 
+            // AQUI É EXECUTADO O PROGRAMA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             try {
                 BatchExecutor batchExecutor = new FileBatchExecutor(folderCorpusIn, folderCorpusOut,
                         compressed, NUM_THREADS, inputFolderWildcard, storeDocuments,
@@ -589,6 +591,9 @@ public class Main {
             } catch (Exception ex) {
                 logger.error("There was a problem running the batch.", ex);
             }
+
+            //MainSDK sdk = new MainSDK(folderCorpusIn, folderCorpusOut);
+            //sdk.runSDK();
         }
     }
 
