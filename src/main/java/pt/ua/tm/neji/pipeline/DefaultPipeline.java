@@ -173,7 +173,7 @@ public class DefaultPipeline extends BasePipeline {
             }
 
             // Run Processing Modules
-            for (Module a : processingList) {
+            for (pt.ua.tm.neji.core.module.Module a : processingList) {
                 a.compile();
                 inside = a.getRun();
                 inside.setIn(previous);
@@ -250,7 +250,7 @@ public class DefaultPipeline extends BasePipeline {
         return reader;
     }
 
-    final List<Module> getProcessingList() {
+    final List<pt.ua.tm.neji.core.module.Module> getProcessingList() {
         return processingList;
     }
 

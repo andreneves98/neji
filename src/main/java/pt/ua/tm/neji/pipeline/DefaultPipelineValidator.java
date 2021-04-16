@@ -72,14 +72,14 @@ public class DefaultPipelineValidator implements PipelineValidator {
     public void validate() throws NejiException {
         Corpus corpus = defaultPipeline.getCorpus();
         Reader reader = defaultPipeline.getReader();
-        List<Module> processingList = defaultPipeline.getProcessingList();
+        List<pt.ua.tm.neji.core.module.Module> processingList = defaultPipeline.getProcessingList();
         List<Writer> writerList = defaultPipeline.getWriterList();
 
         // the provides list that will be iteratively used for validation
         Set<Resource> providedList = new HashSet<>();
         Set<Resource> providedListFromCorpus =  getProvidedFromCorpus(corpus);
 
-        Class<? extends Module> moduleClass;
+        Class<? extends pt.ua.tm.neji.core.module.Module> moduleClass;
         String moduleName;
         Provides provides;
         Requires requires;
@@ -94,7 +94,7 @@ public class DefaultPipelineValidator implements PipelineValidator {
         }
 
 
-        for(Module m : processingList) {
+        for(pt.ua.tm.neji.core.module.Module m : processingList) {
             moduleClass = m.getClass();
             moduleName = moduleClass.getSimpleName();
 
@@ -193,7 +193,7 @@ public class DefaultPipelineValidator implements PipelineValidator {
         }
     }
 
-    private void validateRequires(Module m,
+    private void validateRequires(pt.ua.tm.neji.core.module.Module m,
                                   Set<Resource> providedList,
                                   Set<Resource> providedListFromCorpus,
                                   Requires r) throws NejiException {
@@ -225,7 +225,7 @@ public class DefaultPipelineValidator implements PipelineValidator {
         }
     }
 
-    private void addProvides(Module m, Set<Resource> providedList, Resource[] values) throws NejiException {
+    private void addProvides(pt.ua.tm.neji.core.module.Module m, Set<Resource> providedList, Resource[] values) throws NejiException {
         for(Resource f : values) {
             if(f.equals(Resource.DynamicNLP)) {
                 Collection<Resource> levels = getDynamicNLPLevels(m);
@@ -236,7 +236,7 @@ public class DefaultPipelineValidator implements PipelineValidator {
         }
     }
 
-    private Collection<Resource> getDynamicNLPLevels(Module m) throws NejiException {
+    private Collection<Resource> getDynamicNLPLevels(pt.ua.tm.neji.core.module.Module m) throws NejiException {
         if(Arrays.asList(m.getClass().getInterfaces()).contains(DynamicNLP.class)){
             DynamicNLP module = (DynamicNLP)m;
             Collection<ParserLevel> usedLevels = module.getLevels();
