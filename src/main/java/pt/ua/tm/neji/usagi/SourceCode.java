@@ -75,4 +75,17 @@ public class SourceCode {
 			return conceptIds;
 		}
 	}
+
+
+	@Override
+	public String toString() {
+		return "{" +
+			" sourceCode='" + sourceCode + "'" +
+			", sourceName='" + sourceName + "'" +
+			", sourceFrequency='" + sourceFrequency + "'" +
+			", sourceAutoAssignedConceptIds='" + sourceAutoAssignedConceptIds + "'" +
+			", sourceAdditionalInfo='" + sourceAdditionalInfo + "'" +
+			"}";
+	}
+	
 }

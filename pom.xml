@@ -546,13 +546,13 @@
             <version>5.0.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.sleepycat/je -->
         <dependency>
             <groupId>com.sleepycat</groupId>
             <artifactId>je</artifactId>
-            <version>5.0.73</version>
+            <version>7.3.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/je-7.3.7.jar</systemPath>
         </dependency>
-
 
     </dependencies>   
 

@@ -204,6 +204,7 @@ public class UsagiSearchEngine {
 		}
 
 		public void run() {
+			System.out.println("run() @ UsagiSearchEngine");
 			try {
 				File derivedIndexFolder = new File(folder + "/" + DERIVED_INDEX_FOLDER);
 				if (derivedIndexFolder.exists())
@@ -246,6 +247,7 @@ public class UsagiSearchEngine {
 				reader = DirectoryReader.open(FSDirectory.open(new File(folder + "/" + DERIVED_INDEX_FOLDER)));
 			else
 				reader = DirectoryReader.open(FSDirectory.open(new File(folder + "/" + MAIN_INDEX_FOLDER)));
+			//System.out.println("Reader: " + reader);
 			searcher = new IndexSearcher(reader);
 			searcher.setSimilarity(new DefaultSimilarity());
 			BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
@@ -363,7 +365,7 @@ public class UsagiSearchEngine {
 			for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
 				Document document = reader.document(scoreDoc.doc);
 				int conceptId = Integer.parseInt(document.get("CONCEPT_ID"));
-				Concept targetConcept = Global.dbEngine.getConcept(conceptId);
+				Concept targetConcept = Global.dbEngine.getConcept(conceptId);	// esta linha vai buscar o melhor dos resultados e mostra num painel dedicado
 				String term = document.get("TERM");
 				// If matchscore = 0 but it was the one concept that was automatically selected, still allow it:
 				if (scoreDoc.score > 0 || (filterConceptIds != null && filterConceptIds.size() == 1 && filterConceptIds.contains(targetConcept.conceptId)))
@@ -377,9 +379,9 @@ public class UsagiSearchEngine {
 		}
 
 		System.out.printf("Results for '%s':\n", searchTerm);
-		/*for(ScoredConcept result : results) {
+		for(ScoredConcept result : results) {
 			System.out.println(result.toString());
-		}*/
+		}
 		
 		return results;
 	}

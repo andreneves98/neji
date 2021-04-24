@@ -40,3 +40,7 @@ CVS
 /nb-configuration.xml
 
 releases/
+
+
+# usagi
+usagi/*

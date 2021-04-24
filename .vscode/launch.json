@@ -1,0 +1,224 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.cli.Main",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch DictionariesEntries",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.DictionariesEntries",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch EvaluateMain",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.EvaluateMain",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch Split",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.anem.Split",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch Format2A1",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.arizona.Format2A1",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch XML2A1Main",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.craft.XML2A1Main",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch ProcessDocuments",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.craft.statistics.ProcessDocuments",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch XML2A1Main(1)",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.ncbi.XML2A1Main",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch CoNLL2A1",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.scai.CoNLL2A1",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch XML2A1Main(2)",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.evaluation.whatizit.XML2A1Main",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch Train",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.example.Train",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch MainSDK",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.sdk.MainSDK",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch DictionaryConvert",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.test.DictionaryConvert",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch LexEBIReader",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.test.LexEBIReader",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch LexEBIReaderWithFilter",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.test.LexEBIReaderWithFilter",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestProcessor",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.test.TestProcessor",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestRegexMatcher",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.test.TestRegexMatcher",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch TrainMain",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.train.cli.TrainMain",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch A1ToPipe",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.train.util.A1ToPipe",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch ChemnerToA1",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.train.util.ChemnerToA1",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch ChemnerToBC2",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.train.util.ChemnerToBC2",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch PRGEtoChemner",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.train.util.PRGEtoChemner",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch RemoveIdentifiersA1",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.train.util.RemoveIdentifiersA1",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch IntHashSet",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.usagi.utilities.collections.IntHashSet",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch TSVWithLVG",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.util.TSVWithLVG",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch OBO2TSV",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.util.obo.OBO2TSV",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pubmed",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.web.annotate.pubmed.Pubmed",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch WebMain",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.web.cli.WebMain",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestREST",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.web.test.TestREST",
+            "projectName": "neji"
+        },
+        {
+            "type": "java",
+            "name": "Launch AddUsers",
+            "request": "launch",
+            "mainClass": "pt.ua.tm.neji.web.util.AddUsers",
+            "projectName": "neji"
+        }
+    ]
+}

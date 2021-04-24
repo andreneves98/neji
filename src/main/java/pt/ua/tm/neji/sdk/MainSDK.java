@@ -34,6 +34,10 @@ import pt.ua.tm.neji.reader.RawReader;
 import pt.ua.tm.neji.sentencesplitter.LingpipeSentenceSplitter;
 import pt.ua.tm.neji.usagi.UsagiSearchEngine;
 import pt.ua.tm.neji.usagi.UsagiSearchEngine.ScoredConcept;
+import pt.ua.tm.neji.usagi.indexBuilding.IndexBuildCoordinator;
+import pt.ua.tm.neji.usagi.ui.Global;
+import pt.ua.tm.neji.usagi.BerkeleyDbEngine;
+import pt.ua.tm.neji.usagi.ImportDialog;
 import pt.ua.tm.neji.writer.A1Writer;
 import pt.ua.tm.neji.writer.JSONWriter;
 
@@ -89,9 +93,9 @@ public class MainSDK {
         DictionaryHybrid dictionaryMatcher2 = new DictionaryHybrid(dictionary2);
                 
         // Create machine-learning model matcher
-        /*MLModel model = new MLModel("prge", new File(modelFile));
+        MLModel model = new MLModel("prge", new File(modelFile));
         model.initialize();                                                    // esta linha dá um stackoverflow error
-        MLHybrid mlModelMatcher = new MLHybrid(model.getCrf(), "prge");*/
+        MLHybrid mlModelMatcher = new MLHybrid(model.getCrf(), "prge");
         
         // Create Writer
         //Writer writer = new A1Writer();
@@ -138,10 +142,33 @@ public class MainSDK {
             }
         });
 
-        UsagiSearchEngine usagiSearchEngine = new UsagiSearchEngine("C:/Users/andre/Desktop/tese/ferramentas/usagi");
+        /**** Usagi module ****/
+        // O index já se encontra construído na pasta fornecida, noutra situação é preciso implementar a construção do index.
+        Global.filename = "C:/Users/andre/Desktop/tese/ferramentas/usagi/FieldsToMap_processed.csv";
+        Global.folder = "C:/Users/andre/Desktop/tese/ferramentas/neji/usagi";
+        Global.usagiSearchEngine = new UsagiSearchEngine(Global.folder);
+        Global.dbEngine = new BerkeleyDbEngine(Global.folder);
+        
+        if (!Global.usagiSearchEngine.mainIndexExists()) {
+            IndexBuildCoordinator buildIndex = new IndexBuildCoordinator();
+            String vocabFolder = "C:\\Users\\andre\\Desktop\\tese\\ferramentas\\neji\\usagi\\vocabulary";
+            String loincFolder = null;
+		    buildIndex.buildIndexes(vocabFolder, loincFolder);
+        }
+        else {
+			Global.usagiSearchEngine.openIndexForSearching(false);
+			Global.dbEngine.openForReading();
+		}
+        
+
+        /*ImportDialog importDialog = new ImportDialog(Global.filename);
+        importDialog.loadData(Global.filename);
+        importDialog.importData();*/
+
+
         List<List<ScoredConcept>> usagiOutput = new ArrayList<>();
         for (String term : nejiOut) {
-            List<ScoredConcept> concepts = usagiSearchEngine.search(term, true, null, null, null, null, true, true);    // FALTA A PARTE DO INDEX PARA ISTO FUNFAR
+            List<ScoredConcept> concepts = Global.usagiSearchEngine.search(term, true, null, null, null, null, true, true); 
             usagiOutput.add(concepts);
         }
     }
