@@ -92,7 +92,8 @@
             "name": "Launch MainSDK",
             "request": "launch",
             "mainClass": "pt.ua.tm.neji.sdk.MainSDK",
-            "projectName": "neji"
+            "projectName": "neji",
+            "vmArgs": "-Xms8g -Xss8g"
         },
         {
             "type": "java",

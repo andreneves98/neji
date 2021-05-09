@@ -55,6 +55,12 @@ public class MainSDK {
     public void runSDK() throws NejiException, IOException {*/
         // Set files
 
+        /* Usagi variables */
+        Global.filename = "C:/Users/andre/Desktop/tese/ferramentas/usagi/FieldsToMap_processed.csv";
+        Global.folder = "C:/Users/andre/Desktop/tese/ferramentas/neji/usagi";
+        Global.usagiSearchEngine = new UsagiSearchEngine(Global.folder);
+        Global.dbEngine = new BerkeleyDbEngine(Global.folder);
+
         System.out.println("Running main SDK...");
         String documentFile = "example/annotate/in/22528326.txt";
         //String outputFile = "example/annotate/out/22528326.a1";
@@ -68,8 +74,9 @@ public class MainSDK {
         String modelFile = "example/models/prge/prge.properties";
        
         NejiSDK(documentFile, outputFile, dictionary1File, dictionary2File, modelFile);
-        parseJSONOutput(outputFile);
-
+        List<String> nejiOut = parseJSONOutput(outputFile);
+        usagiIndex();
+        searchTerms(nejiOut);
     }
 
     public static void NejiSDK(String documentFile, String outputFile, String dictionary1File, String dictionary2File, String modelFile) throws NejiException, IOException {
@@ -94,8 +101,8 @@ public class MainSDK {
                 
         // Create machine-learning model matcher
         MLModel model = new MLModel("prge", new File(modelFile));
-        model.initialize();                                                    // esta linha dá um stackoverflow error
-        MLHybrid mlModelMatcher = new MLHybrid(model.getCrf(), "prge");
+        //model.initialize();                                                    // esta linha dá um stackoverflow error
+        //MLHybrid mlModelMatcher = new MLHybrid(model.getCrf(), "prge");
         
         // Create Writer
         //Writer writer = new A1Writer();
@@ -127,7 +134,7 @@ public class MainSDK {
         
     }
 
-    public static void parseJSONOutput(String outputFile) throws JsonParseException, IOException {
+    public static List<String> parseJSONOutput(String outputFile) throws JsonParseException, IOException {
 
         List<String> nejiOut = new ArrayList<String>();
         final ObjectMapper objectMapper = new ObjectMapper();
@@ -142,13 +149,26 @@ public class MainSDK {
             }
         });
 
+        return nejiOut;
+
         /**** Usagi module ****/
         // O index já se encontra construído na pasta fornecida, noutra situação é preciso implementar a construção do index.
-        Global.filename = "C:/Users/andre/Desktop/tese/ferramentas/usagi/FieldsToMap_processed.csv";
+        /*Global.filename = "C:/Users/andre/Desktop/tese/ferramentas/usagi/FieldsToMap_processed.csv";
         Global.folder = "C:/Users/andre/Desktop/tese/ferramentas/neji/usagi";
         Global.usagiSearchEngine = new UsagiSearchEngine(Global.folder);
-        Global.dbEngine = new BerkeleyDbEngine(Global.folder);
+        Global.dbEngine = new BerkeleyDbEngine(Global.folder);*/
         
+        
+        
+        /***** IMPORT CODES FROM A .CSV FILE *****/
+        /*ImportDialog importDialog = new ImportDialog(Global.filename);
+        importDialog.loadData(Global.filename);
+        importDialog.importData();*/
+
+        
+    }
+
+    public static void usagiIndex() {
         if (!Global.usagiSearchEngine.mainIndexExists()) {
             IndexBuildCoordinator buildIndex = new IndexBuildCoordinator();
             String vocabFolder = "C:\\Users\\andre\\Desktop\\tese\\ferramentas\\neji\\usagi\\vocabulary";
@@ -159,13 +179,10 @@ public class MainSDK {
 			Global.usagiSearchEngine.openIndexForSearching(false);
 			Global.dbEngine.openForReading();
 		}
-        
+    }
 
-        /*ImportDialog importDialog = new ImportDialog(Global.filename);
-        importDialog.loadData(Global.filename);
-        importDialog.importData();*/
-
-
+    public static void searchTerms(List<String> nejiOut) {
+        /***** SEARCH NEJI OUTPUT *****/
         List<List<ScoredConcept>> usagiOutput = new ArrayList<>();
         for (String term : nejiOut) {
             List<ScoredConcept> concepts = Global.usagiSearchEngine.search(term, true, null, null, null, null, true, true); 
