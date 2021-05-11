@@ -1,18 +1,16 @@
 import React from 'react';
-import {
-  createMuiTheme,
-  createStyles,
-  ThemeProvider,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Navigator from './Navigator';
-import Content from './Content';
-import Header from './Header';
+import Navigator from '../components/Navigator';
+import AnnotationPage from '../views/AnnotationPage';
+import Header from '../components/Header';
+import routes from "../routes.js"
+
+import { Route, Switch, useLocation } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -139,7 +137,7 @@ theme = {
 
 const drawerWidth = 256;
 
-const styles = createStyles({
+const styles = {
   root: {
     display: 'flex',
     minHeight: '100vh',
@@ -164,17 +162,54 @@ const styles = createStyles({
     padding: theme.spacing(2),
     background: '#eaeff1',
   },
-});
+};
 
-export interface PaperbaseProps extends WithStyles<typeof styles> {}
-
-function Paperbase(props: PaperbaseProps) {
+function App(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const getRoutes = (routes) => {
+    return routes.map((prop, key) => {
+      if (prop.layout === "/app") {
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            render={(props) => <prop.component {...props} />}
+            key={key}
+          />
+        );
+      } else {
+        return null;
+      }
+    });
+  };
+
+  const location = useLocation();
+  const getHeaderTitle = () => {
+    let title;
+    switch (location.pathname) {
+      case "/app/annotation":
+        title = "Annotation";
+        break;
+      case "/app/mapping":
+        title = "Mapping";
+        break;
+      case "/app/dictionaries":
+        title = "Dictionaries";
+        break;
+      case "/app/machine learning models":
+        title = "Machine Learning Models";
+        break;
+      default:
+        title = "Annotation";
+        break;
+    }
+    return title;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -194,9 +229,10 @@ function Paperbase(props: PaperbaseProps) {
           </Hidden>
         </nav>
         <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
+          <Header onDrawerToggle={handleDrawerToggle} title={getHeaderTitle()} />
           <main className={classes.main}>
-            <Content />
+            {console.log(getRoutes(routes)), console.log(location)}
+            <Switch>{getRoutes(routes)}</Switch>
           </main>
           <footer className={classes.footer}>
             <Copyright />
@@ -207,4 +243,8 @@ function Paperbase(props: PaperbaseProps) {
   );
 }
 
-export default withStyles(styles)(Paperbase);
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(App);

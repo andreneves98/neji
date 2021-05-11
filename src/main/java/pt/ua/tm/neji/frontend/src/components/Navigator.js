@@ -1,98 +1,92 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import Drawer, { DrawerProps } from '@material-ui/core/Drawer';
+import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
-import PeopleIcon from '@material-ui/icons/People';
-import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
-import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
-import PublicIcon from '@material-ui/icons/Public';
-import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
-import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
+import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
+import SettingsEthernetRoundedIcon from '@material-ui/icons/SettingsEthernetRounded';
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
-import { Omit } from '@material-ui/types';
+import StorageRoundedIcon from '@material-ui/icons/StorageRounded';
+import AccountTreeRoundedIcon from '@material-ui/icons/AccountTreeRounded';
 
 const categories = [
   {
-    id: 'Develop',
+    id: 'Workspace',
     children: [
-      { id: 'Authentication', icon: <PeopleIcon />, active: true },
-      { id: 'Database', icon: <DnsRoundedIcon /> },
-      { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Hosting', icon: <PublicIcon /> },
-      { id: 'Functions', icon: <SettingsEthernetIcon /> },
-      { id: 'ML Kit', icon: <SettingsInputComponentIcon /> },
+      { id: 'Annotation', icon: <CreateRoundedIcon />, active: true },
+      { id: 'Mapping', icon: <SettingsEthernetRoundedIcon />, active: false },
     ],
   },
   {
-    id: 'Quality',
+    id: 'Manage',
     children: [
-      { id: 'Analytics', icon: <SettingsIcon /> },
-      { id: 'Performance', icon: <TimerIcon /> },
-      { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
+      { id: 'Dictionaries', icon: <StorageRoundedIcon />, active: false },
+      { id: 'Machine Learning Models', icon: <AccountTreeRoundedIcon />, active: false },
     ],
   },
 ];
 
-const styles = (theme: Theme) =>
-  createStyles({
-    categoryHeader: {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
+const styles = (theme) => ({
+  categoryHeader: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  categoryHeaderPrimary: {
+    color: theme.palette.common.white,
+  },
+  item: {
+    paddingTop: 1,
+    paddingBottom: 1,
+    color: 'rgba(255, 255, 255, 0.7)',
+    '&:hover,&:focus': {
+      backgroundColor: 'rgba(255, 255, 255, 0.08)',
     },
-    categoryHeaderPrimary: {
-      color: theme.palette.common.white,
-    },
-    item: {
-      paddingTop: 1,
-      paddingBottom: 1,
-      color: 'rgba(255, 255, 255, 0.7)',
-      '&:hover,&:focus': {
-        backgroundColor: 'rgba(255, 255, 255, 0.08)',
-      },
-    },
-    itemCategory: {
-      backgroundColor: '#232f3e',
-      boxShadow: '0 -1px 0 #404854 inset',
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-    },
-    firebase: {
-      fontSize: 24,
-      color: theme.palette.common.white,
-    },
-    itemActiveItem: {
-      color: '#4fc3f7',
-    },
-    itemPrimary: {
-      fontSize: 'inherit',
-    },
-    itemIcon: {
-      minWidth: 'auto',
-      marginRight: theme.spacing(2),
-    },
-    divider: {
-      marginTop: theme.spacing(2),
-    },
-  });
+  },
+  itemCategory: {
+    backgroundColor: '#232f3e',
+    boxShadow: '0 -1px 0 #404854 inset',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  firebase: {
+    fontSize: 24,
+    color: theme.palette.common.white,
+  },
+  itemActiveItem: {
+    color: '#4fc3f7',
+  },
+  itemPrimary: {
+    fontSize: 'inherit',
+  },
+  itemIcon: {
+    minWidth: 'auto',
+    marginRight: theme.spacing(2),
+  },
+  divider: {
+    marginTop: theme.spacing(2),
+  },
+});
 
-export interface NavigatorProps extends Omit<DrawerProps, 'classes'>, WithStyles<typeof styles> {}
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
-function Navigator(props: NavigatorProps) {
+function Navigator(props) {
   const { classes, ...other } = props;
 
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
-          Paperbase
+          Neji
         </ListItem>
         <ListItem className={clsx(classes.item, classes.itemCategory)}>
           <ListItemIcon className={classes.itemIcon}>
@@ -118,8 +112,13 @@ function Navigator(props: NavigatorProps) {
               </ListItemText>
             </ListItem>
             {children.map(({ id: childId, icon, active }) => (
-              <ListItem
+              /*<ListItem
                 key={childId}
+                button
+                className={clsx(classes.item, active && classes.itemActiveItem)}
+              >*/
+              <ListItemLink href={"/app/"+childId.toLowerCase()} 
+                key={childId} 
                 button
                 className={clsx(classes.item, active && classes.itemActiveItem)}
               >
@@ -131,8 +130,10 @@ function Navigator(props: NavigatorProps) {
                 >
                   {childId}
                 </ListItemText>
-              </ListItem>
+              </ListItemLink>
+              //</ListItem>
             ))}
+
             <Divider className={classes.divider} />
           </React.Fragment>
         ))}
@@ -140,5 +141,9 @@ function Navigator(props: NavigatorProps) {
     </Drawer>
   );
 }
+
+Navigator.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(Navigator);

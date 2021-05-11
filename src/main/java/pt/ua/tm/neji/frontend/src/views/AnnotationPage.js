@@ -53,7 +53,7 @@ const styles = (theme) => ({
   },
 });
 
-function Content(props) {
+function AnnotationPage(props) {
   const { classes } = props;
 
   return (
@@ -109,8 +109,8 @@ function Content(props) {
   );
 }
 
-Content.propTypes = {
+AnnotationPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+export default withStyles(styles)(AnnotationPage);
