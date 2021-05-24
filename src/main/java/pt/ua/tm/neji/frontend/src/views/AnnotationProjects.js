@@ -77,10 +77,10 @@ export default function AnnotationProjects() {
                   <TableHead>
                     <TableRow>
                       <StyledTableCell>Name</StyledTableCell>
-                      <StyledTableCell align="right">Manager</StyledTableCell>
-                      <StyledTableCell align="right">Documents</StyledTableCell>
-                      <StyledTableCell align="right">Members</StyledTableCell>
-                      <StyledTableCell align="right">Status</StyledTableCell>
+                      <StyledTableCell align="center">Manager</StyledTableCell>
+                      <StyledTableCell align="center">Documents</StyledTableCell>
+                      <StyledTableCell align="center">Members</StyledTableCell>
+                      <StyledTableCell align="center">Status</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -91,10 +91,10 @@ export default function AnnotationProjects() {
                             {row.name}
                           </Link>
                         </StyledTableCell>
-                        <StyledTableCell align="right">{row.manager}</StyledTableCell>
-                        <StyledTableCell align="right">{row.documents}</StyledTableCell>
-                        <StyledTableCell align="right">{row.members}</StyledTableCell>
-                        <StatusStyledCell align="right">
+                        <StyledTableCell align="center">{row.manager}</StyledTableCell>
+                        <StyledTableCell align="center">{row.documents}</StyledTableCell>
+                        <StyledTableCell align="center">{row.members}</StyledTableCell>
+                        <StatusStyledCell align="center">
                             {row.status}
                         </StatusStyledCell>
                       </StyledTableRow>

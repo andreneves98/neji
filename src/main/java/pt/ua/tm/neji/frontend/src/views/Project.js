@@ -16,8 +16,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Grid } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import { useLocation, Link } from 'react-router-dom';
+import PublishRoundedIcon from '@material-ui/icons/PublishRounded';
 
 const StyledTabs = withStyles({
     indicator: {
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
     },
     table: {
-        minWidth: 700,
+        
     }
 }));
 
@@ -123,14 +124,31 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-function createData(title, annotations, lastUpdate) {
+function createDocsData(title, annotations, lastUpdate) {
     return { title, annotations, lastUpdate };
 }
 
-const rows = [
-    createData('Upregulation of chemokines and their receptors in Duchenne' +
+function createMembersData(name, role) {
+    return { name, role };
+}
+
+function createTypesData(type, color) {
+    return { type, color };
+}
+
+const docsRows = [
+    createDocsData('Upregulation of chemokines and their receptors in Duchenne' +
     ' muscular dystrophy: potential for attenuation of myofiber necrosis', 245, '3 minutes ago'),
-    createData('Sesamin extends the mean lifespan of fruit flies', 564, '2 hours ago'),
+    createDocsData('Sesamin extends the mean lifespan of fruit flies', 564, '2 hours ago'),
+];
+
+const membersRows = [
+    createMembersData('John', 'Project Manager'),
+    createMembersData('Alice', 'Annotator'),
+];
+
+const typesRows = [
+    createTypesData('GENE', 'Green'),
 ];
 
 export default function CustomizedTabs() {
@@ -141,7 +159,7 @@ export default function CustomizedTabs() {
         setValue(newValue);
     };
 
-    const documentsTable = () => {
+    const documentsTab = () => {
         return (
             <Grid
                 container
@@ -155,17 +173,17 @@ export default function CustomizedTabs() {
                                 <Table className={classes.table} aria-label="customized table">
                                     <TableHead>
                                         <TableRow>
-                                            <StyledTableCell>Title</StyledTableCell>
-                                            <StyledTableCell align="right">Annotations</StyledTableCell>
-                                            <StyledTableCell align="right">Last Update</StyledTableCell>
+                                            <StyledTableCell align="center">Title</StyledTableCell>
+                                            <StyledTableCell align="center">Annotations</StyledTableCell>
+                                            <StyledTableCell align="center">Last Update</StyledTableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {rows.map((row) => (
+                                        {docsRows.map((row) => (
                                             <StyledTableRow key={row.name}>
-                                                <StyledTableCell component="th" scope="row">{row.title}</StyledTableCell>
-                                                <StyledTableCell align="right">{row.annotations}</StyledTableCell>
-                                                <StyledTableCell align="right">{row.lastUpdate}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row" align="center">{row.title}</StyledTableCell>
+                                                <StyledTableCell align="center">{row.annotations}</StyledTableCell>
+                                                <StyledTableCell align="center">{row.lastUpdate}</StyledTableCell>
                                             </StyledTableRow>
                                         ))}
                                     </TableBody>
@@ -178,8 +196,90 @@ export default function CustomizedTabs() {
                 <Grid item>
                     <Grid container direction="row" justify="center">
                         <Grid item xs={10}>
-                            <Button variant="contained" color="primary" startIcon={<AddCircleIcon />}>
-                                New Project
+                            <Button variant="contained" color="primary" startIcon={<PublishRoundedIcon />}>
+                                Upload
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        );
+    }
+
+    const membersTab = () => {
+        return (
+            <Grid
+                container
+                direction="column"
+                spacing={5}
+            >
+                <Grid item>
+                    <Grid container direction="row" justify="center">
+                        <Grid item xs={10}>
+                            <TableContainer component={Paper}>
+                                <Table className={classes.table} aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="center">Name</StyledTableCell>
+                                            <StyledTableCell align="center">Role</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {membersRows.map((row) => (
+                                            <StyledTableRow key={row.name}>
+                                                <StyledTableCell component="th" scope="row" align="center">{row.name}</StyledTableCell>
+                                                <StyledTableCell align="center">{row.role}</StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                
+            </Grid>
+        );
+    }
+
+    const typesTab = () => {
+        return (
+            <Grid
+                container
+                direction="column"
+                spacing={5}
+            >
+                <Grid item>
+                    <Grid container direction="row" justify="center">
+                        <Grid item xs={10}>
+                            <TableContainer component={Paper}>
+                                <Table className={classes.table} aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="center">Type</StyledTableCell>
+                                            <StyledTableCell align="center">Color</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {typesRows.map((row) => (
+                                            <StyledTableRow key={row.type}>
+                                                <StyledTableCell component="th" scope="row" align="center">{row.type}</StyledTableCell>
+                                                <StyledTableCell align="center">{row.color}</StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid item>
+                    <Grid container direction="row" justify="center">
+                        <Grid item xs={10}>
+                            <Button variant="contained" color="primary" startIcon={<AddCircleRoundedIcon />}>
+                                Add Type
                             </Button>
                         </Grid>
                     </Grid>
@@ -197,13 +297,13 @@ export default function CustomizedTabs() {
                     <StyledTab label="Types" {...a11yProps(2)} />
                 </StyledTabs>
                 <TabPanel value={value} index={0}>
-                    {documentsTable()}
+                    {documentsTab()}
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    Page Two
+                    {membersTab()}
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    Page Three
+                    {typesTab()}
                 </TabPanel>
             </div>
         </div>
