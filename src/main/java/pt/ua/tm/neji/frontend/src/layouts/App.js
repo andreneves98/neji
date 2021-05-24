@@ -3,27 +3,13 @@ import PropTypes from 'prop-types';
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import Navigator from '../components/Navigator';
-import AnnotationPage from '../views/AnnotationPage';
 import Header from '../components/Header';
-import routes from "../routes.js"
+import Copyright from '../components/Copyright';
+import AnnotationPage from '../views/AnnotationPage';
+import routes from "../routes.js";
 
 import { Route, Switch, useLocation } from "react-router-dom";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 let theme = createMuiTheme({
   palette: {
@@ -177,7 +163,7 @@ function App(props) {
       if (prop.layout === "/app") {
         return (
           <Route
-            path={prop.layout + prop.path}
+            exact path={prop.layout + prop.path}
             render={(props) => <prop.component {...props} />}
             key={key}
           />
@@ -192,6 +178,9 @@ function App(props) {
   const getHeaderTitle = () => {
     let title;
     switch (location.pathname) {
+      case "/app/projects":
+        title = "Annotation » Projects";
+        break;
       case "/app/annotation":
         title = "Annotation";
         break;
@@ -199,10 +188,10 @@ function App(props) {
         title = "Mapping";
         break;
       case "/app/dictionaries":
-        title = "Dictionaries";
+        title = "Annotation » Dictionaries";
         break;
       case "/app/machine learning models":
-        title = "Machine Learning Models";
+        title = "Annotation » Machine Learning Models";
         break;
       default:
         title = "Annotation";

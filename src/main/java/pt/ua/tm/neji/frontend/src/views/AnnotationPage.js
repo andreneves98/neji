@@ -41,12 +41,18 @@ const styles = (theme) => ({
     marginRight: theme.spacing(1),
   },
   clearButton: {
-    backgroundColor: "red",
-    color: "white"
+    backgroundColor: "rgba(214, 2, 2, 1)",
+    color: "white",
+    '&:hover,&:focus': {
+      backgroundColor: 'rgba(255, 0, 0, 1)',
+    },
   },
   annotateButton: {
-    backgroundColor: "green",
-    color: "white"
+    backgroundColor: "rgba(0, 150, 0, 1)",
+    color: "white",
+    '&:hover,&:focus': {
+      backgroundColor: 'rgba(0, 170, 0, 1)',
+    }
   },
   contentWrapper: {
     margin: '40px 16px',
@@ -56,8 +62,12 @@ const styles = (theme) => ({
 function AnnotationPage(props) {
   const { classes } = props;
 
+  const handleLoadFile = () => {
+     
+  }
+
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" spacing={4}>
       <Grid item>
         <Paper className={classes.paper}>
           <AppBar className={classes.loadBar} position="static" color="default" elevation={0}>
@@ -86,22 +96,23 @@ function AnnotationPage(props) {
       </Grid>
 
       <Grid item>
-        <AppBar className={classes.annotationActions} position="static" color="default" style={{background: 'transparent', boxShadow: 'none'}}>
-          <Toolbar>
-            <Grid container spacing={2} direction="row" justify="flex-end" alignItems="center">
-              <Grid item>
-                <Button variant="contained" className={classes.clearButton} startIcon={<CancelRoundedIcon />}>
-                  Clear
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="contained" className={classes.annotateButton} startIcon={<CreateRoundedIcon />}>
-                  Annotate
-                </Button>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
+        <Grid container spacing={2} direction="row" justify="flex-end">
+          <Grid item>
+            <Button 
+              variant="contained" 
+              className={classes.clearButton} 
+              startIcon={<CancelRoundedIcon 
+              onClick={handleLoadFile}
+            />}>
+              Clear
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" className={classes.annotateButton} startIcon={<CreateRoundedIcon />}>
+              Annotate
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
     

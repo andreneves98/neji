@@ -19,17 +19,18 @@ import AccountTreeRoundedIcon from '@material-ui/icons/AccountTreeRounded';
 
 const categories = [
   {
-    id: 'Workspace',
+    id: 'Annotation',
     children: [
-      { id: 'Annotation', icon: <CreateRoundedIcon />, active: true },
-      { id: 'Mapping', icon: <SettingsEthernetRoundedIcon />, active: false },
+      { id: 'Projects', icon: <CreateRoundedIcon />, active: true },
+      { id: 'Dictionaries', icon: <StorageRoundedIcon />, active: false },
+      { id: 'Machine Learning Models', icon: <AccountTreeRoundedIcon />, active: false },
+      { id: 'Preferences', icon: <SettingsIcon />, active: false },
     ],
   },
   {
-    id: 'Manage',
+    id: 'Mapping',
     children: [
-      { id: 'Dictionaries', icon: <StorageRoundedIcon />, active: false },
-      { id: 'Machine Learning Models', icon: <AccountTreeRoundedIcon />, active: false },
+      
     ],
   },
 ];
