@@ -13,7 +13,7 @@ ReactDOM.render(
             <Route path="/app" render={(props) => <App {...props} />} />
             <Route exact path="/app/projects" component={App} />
             <Route path="/app/projects/:name" component={Project} />
-            <Redirect exact from="/" to="/app" />
+            <Redirect exact from="/" to="/app/projects" />
         </Switch>
     </BrowserRouter>,
     document.getElementById("root")

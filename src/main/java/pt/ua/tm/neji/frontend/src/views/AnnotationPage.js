@@ -80,7 +80,7 @@ function AnnotationPage(props) {
                   <Typography color="textSecondary" variant="h6">Annotation Area</Typography>
                 </Grid>
                 <Grid item>
-                  <Button  variant="contained" color="primary" startIcon={<PublishRoundedIcon />}>
+                  <Button  variant="contained" color="secondary" startIcon={<PublishRoundedIcon />}>
                     Load file
                   </Button>
                 </Grid>

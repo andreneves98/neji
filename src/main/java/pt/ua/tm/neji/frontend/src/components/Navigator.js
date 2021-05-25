@@ -52,7 +52,7 @@ const styles = (theme) => ({
     },
   },
   itemCategory: {
-    backgroundColor: '#232f3e',
+    //backgroundColor: '#363333',
     boxShadow: '0 -1px 0 #404854 inset',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -74,6 +74,9 @@ const styles = (theme) => ({
   divider: {
     marginTop: theme.spacing(2),
   },
+  paper: {
+    background: "474545"
+  }
 });
 
 function ListItemLink(props) {

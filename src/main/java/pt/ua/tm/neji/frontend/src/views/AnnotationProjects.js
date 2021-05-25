@@ -16,7 +16,7 @@ import Project from './Project';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "rgb(102, 161, 255)",
+    backgroundColor: "#232f3e",
     color: theme.palette.common.white,
     fontSize: 16,
     fontWeight: 'bold',
@@ -109,7 +109,7 @@ export default function AnnotationProjects() {
         <Grid item>
           <Grid container direction="row" justify="center">
             <Grid item xs={10}>
-              <Button  variant="contained" color="primary" startIcon={<AddCircleIcon />}>
+              <Button  variant="contained" color="secondary" startIcon={<AddCircleIcon />}>
                 New Project
               </Button>
             </Grid>
