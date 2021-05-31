@@ -156,6 +156,7 @@ const typesRows = [
 export default function CustomizedTabs() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    const location = useLocation();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -221,7 +222,8 @@ export default function CustomizedTabs() {
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" style={{backgroundColor:"#039c15", color:"white"}} startIcon={<CreateRoundedIcon />}>
+                            <Button variant="contained" style={{backgroundColor:"#039c15", color:"white"}} startIcon={<CreateRoundedIcon />}
+                                    href={location.pathname + "/annotation"}>
                                 Annotate
                             </Button>
                         </Grid>

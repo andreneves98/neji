@@ -59,7 +59,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function AnnotationProjects() {
+export default function ProjectsPage() {
     const classes = useStyles();
     const location = useLocation();
 
@@ -111,7 +111,7 @@ export default function AnnotationProjects() {
                     <Grid item xs={10}>
                         <Button variant="contained" color="secondary" startIcon={<AddCircleIcon />}>
                             New Project
-              </Button>
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>

@@ -1,7 +1,8 @@
-import AnnotationProjects from "./views/AnnotationProjects";
+import ProjectsPage from "./views/ProjectsPage";
 import SA_AnnotationPage from "./views/SA_AnnotationPage";
 import Mapping from "./views/Mapping";
 import Project from "./views/Project";
+import AnnotateProject from "./views/AnnotateProject";
 
 const routes = [
     {
@@ -13,13 +14,7 @@ const routes = [
     {
         path: "/projects",
         name: "Annotation Projects",
-        component: AnnotationProjects,
-        layout: "/app",
-    },
-    {
-        path: "/annotation",
-        name: "Annotation",
-        component: SA_AnnotationPage,
+        component: ProjectsPage,
         layout: "/app",
     },
     {
@@ -32,6 +27,12 @@ const routes = [
         path: "/projects/:name",
         name: "Project",
         component: Project,
+        layout: "/app"
+    },
+    {
+        path: "/projects/:name/annotation",
+        name: "Project",
+        component: AnnotateProject,
         layout: "/app"
     }
 ]
