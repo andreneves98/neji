@@ -4,9 +4,10 @@ import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/sty
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Navigator from '../components/Navigator';
+import Nav from '../components/Nav';
 import Header from '../components/Header';
 import Copyright from '../components/Copyright';
-import AnnotationPage from '../views/AnnotationPage';
+import SA_AnnotationPage from '../views/SA_AnnotationPage';
 import routes from "../routes.js";
 import { Link } from 'react-router-dom';
 import { regexifyString } from "regexify-string";
@@ -134,11 +135,59 @@ const styles = {
         display: 'flex',
         minHeight: '100vh',
     },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    appBarShift: {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    menuButton: {
+        marginRight: 36,
+    },
+    hide: {
+        display: 'none',
+    },
     drawer: {
         [theme.breakpoints.up('sm')]: {
             width: drawerWidth,
             flexShrink: 0,
+            whiteSpace: 'nowrap',
         },
+    },
+    drawerOpen: {
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerClose: {
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        overflowX: 'hidden',
+        width: theme.spacing(7) + 1,
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(9) + 1,
+        },
+    },
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 1),
+        // necessary for content to be below app bar
+        ...theme.mixins.toolbar,
     },
     app: {
         flex: 1,
@@ -146,7 +195,7 @@ const styles = {
         flexDirection: 'column',
     },
     main: {
-        flex: 1,
+        flexGrow: 1,
         padding: theme.spacing(6, 4),
         background: '#eaeff1',
     },
@@ -202,12 +251,12 @@ function App(props) {
 
             // Add section name and path to the dictionary
             sections[lastSection] = originalPath;
-            
+
             // Add section to array
             orderedSections.push(lastSection);
-            
+
             // Remove the last section from the original path
-            originalPath = originalPath.replace("/" + lastSection, "");            
+            originalPath = originalPath.replace("/" + lastSection, "");
         }
         orderedSections.reverse();
         console.log(orderedSections);
@@ -222,7 +271,7 @@ function App(props) {
             //console.log(result(sections, section, tmp, title));
         }
         title = title.slice(0, -1);     // remove the last character '»'
-        
+
         return title;
 
         /*let title;
@@ -263,7 +312,7 @@ function App(props) {
                         />
                     </Hidden>
                     <Hidden xsDown implementation="css">
-                        <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+                        <Navigator PaperProps={{ style: { width: drawerWidth } }} onClose={handleDrawerToggle} />
                     </Hidden>
                 </nav>
                 <div className={classes.app}>
@@ -285,4 +334,4 @@ App.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(App); 
+export default withStyles(styles)(App);

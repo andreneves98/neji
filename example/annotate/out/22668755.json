@@ -1,1 +1,117 @@
-[{"id":0,"start":0,"end":185,"text":"Intronic variants in SLCO1B1 related to statin-induced myopathy are associated with the low-density lipoprotein cholesterol response to statins in Chinese patients with hyperlipidaemia.","terms":[{"ids":"UNIPROT:Q9Y6L6:T116:PRGE","score":0.24853609567820426,"id":1,"start":21,"end":28,"text":"SLCO1B1","terms":[]},{"ids":"UNIPROT:Q05639:T116:PRGE","score":0.24853609567820426,"id":2,"start":40,"end":46,"text":"statin","terms":[]},{"ids":"UMLS:C0026848:T047:DISO","score":1.0,"id":3,"start":55,"end":63,"text":"myopathy","terms":[]},{"ids":"UMLS:C0020473:T047:DISO","score":1.0,"id":4,"start":169,"end":184,"text":"hyperlipidaemia","terms":[]}]},{"id":1,"start":187,"end":336,"text":"Whole-genome studies have identified several intronic single nucleotide polymorphisms (SNPs) in SLCO1B1 associated with simvastatin-induced myopathy.","terms":[{"ids":"UNIPROT:Q9Y6L6:T116:PRGE","score":0.5487984675515682,"id":1,"start":283,"end":290,"text":"SLCO1B1","terms":[]},{"ids":"UMLS:C0026848:T047:DISO","score":1.0,"id":2,"start":327,"end":335,"text":"myopathy","terms":[]}]},{"id":2,"start":337,"end":526,"text":"The present study determined the effect of an intronic SNP rs4149081 in SLCO1B1 on the lipid-lowering effects of simvastatin and rosuvastatin in Chinese patients with hypercholesterolaemia.","terms":[{"ids":"UMLS:C0020443:T047:DISO","score":1.0,"id":1,"start":504,"end":525,"text":"hypercholesterolaemia","terms":[]}]},{"id":3,"start":527,"end":696,"text":"Lipid profiles were determined off treatment and after at least 4 weeks of treatment with each of the statins at daily doses of rosuvastatin 10 mg and simvastatin 40 mg.","terms":[]},{"id":4,"start":697,"end":995,"text":"In 247 patients with good adherence, the rs4149081 G\u003eA polymorphism was significantly associated with a 4.6 and 4.0% greater low-density lipoprotein cholesterol (LDL-C) reduction compared with those with wild-type alleles in response to rosuvastatin and simvastatin, respectively (P\u003c0.05 for both).","terms":[]},{"id":5,"start":996,"end":1093,"text":"The 388A\u003eG and 521T\u003eC polymorphisms were not associated with the LDL-C response to either statin.","terms":[]},{"id":6,"start":1094,"end":1266,"text":"The intronic SNP rs4149081 in SLCO1B1 was associated with the LDL-C response to statins in Chinese patients and this association was independent of the 521T\u003eC polymorphism.","terms":[]}]
+[
+    {
+        "id": 0,
+        "start": 0,
+        "end": 185,
+        "text": "Intronic variants in SLCO1B1 related to statin-induced myopathy are associated with the low-density lipoprotein cholesterol response to statins in Chinese patients with hyperlipidaemia.",
+        "terms": [
+            {
+                "ids": "UNIPROT:Q9Y6L6:T116:PRGE",
+                "score": 0.24853609567820426,
+                "id": 1,
+                "start": 21,
+                "end": 28,
+                "text": "SLCO1B1",
+                "terms": []
+            },
+            {
+                "ids": "UNIPROT:Q05639:T116:PRGE",
+                "score": 0.24853609567820426,
+                "id": 2,
+                "start": 40,
+                "end": 46,
+                "text": "statin",
+                "terms": []
+            },
+            {
+                "ids": "UMLS:C0026848:T047:DISO",
+                "score": 1.0,
+                "id": 3,
+                "start": 55,
+                "end": 63,
+                "text": "myopathy",
+                "terms": []
+            },
+            {
+                "ids": "UMLS:C0020473:T047:DISO",
+                "score": 1.0,
+                "id": 4,
+                "start": 169,
+                "end": 184,
+                "text": "hyperlipidaemia",
+                "terms": []
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "start": 187,
+        "end": 336,
+        "text": "Whole-genome studies have identified several intronic single nucleotide polymorphisms (SNPs) in SLCO1B1 associated with simvastatin-induced myopathy.",
+        "terms": [
+            {
+                "ids": "UNIPROT:Q9Y6L6:T116:PRGE",
+                "score": 0.5487984675515682,
+                "id": 1,
+                "start": 283,
+                "end": 290,
+                "text": "SLCO1B1",
+                "terms": []
+            },
+            {
+                "ids": "UMLS:C0026848:T047:DISO",
+                "score": 1.0,
+                "id": 2,
+                "start": 327,
+                "end": 335,
+                "text": "myopathy",
+                "terms": []
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "start": 337,
+        "end": 526,
+        "text": "The present study determined the effect of an intronic SNP rs4149081 in SLCO1B1 on the lipid-lowering effects of simvastatin and rosuvastatin in Chinese patients with hypercholesterolaemia.",
+        "terms": [
+            {
+                "ids": "UMLS:C0020443:T047:DISO",
+                "score": 1.0,
+                "id": 1,
+                "start": 504,
+                "end": 525,
+                "text": "hypercholesterolaemia",
+                "terms": []
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "start": 527,
+        "end": 696,
+        "text": "Lipid profiles were determined off treatment and after at least 4 weeks of treatment with each of the statins at daily doses of rosuvastatin 10 mg and simvastatin 40 mg.",
+        "terms": []
+    },
+    {
+        "id": 4,
+        "start": 697,
+        "end": 995,
+        "text": "In 247 patients with good adherence, the rs4149081 G\u003eA polymorphism was significantly associated with a 4.6 and 4.0% greater low-density lipoprotein cholesterol (LDL-C) reduction compared with those with wild-type alleles in response to rosuvastatin and simvastatin, respectively (P\u003c0.05 for both).",
+        "terms": []
+    },
+    {
+        "id": 5,
+        "start": 996,
+        "end": 1093,
+        "text": "The 388A\u003eG and 521T\u003eC polymorphisms were not associated with the LDL-C response to either statin.",
+        "terms": []
+    },
+    {
+        "id": 6,
+        "start": 1094,
+        "end": 1266,
+        "text": "The intronic SNP rs4149081 in SLCO1B1 was associated with the LDL-C response to statins in Chinese patients and this association was independent of the 521T\u003eC polymorphism.",
+        "terms": []
+    }
+]

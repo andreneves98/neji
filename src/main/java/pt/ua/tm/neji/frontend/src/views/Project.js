@@ -14,7 +14,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { FormControl, Grid, OutlinedInput, InputAdornment, InputLabel, TextField, createMuiTheme } from '@material-ui/core';
+import { FormControl, Grid, OutlinedInput, InputAdornment, InputLabel, TextField, createMuiTheme, Tooltip } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import { useLocation, Link } from 'react-router-dom';
@@ -188,21 +188,13 @@ export default function CustomizedTabs() {
                                                 <StyledTableCell align="center">{row.annotations}</StyledTableCell>
                                                 <StyledTableCell align="center">{row.lastUpdate}</StyledTableCell>
                                                 <StyledTableCell align="center">
-                                                    <Grid container direction="row" justify="center" spacing={2}>
-                                                        <Grid item xs={4}>
-                                                            <IconButton style={{color: "#db0e0b"}} aria-label="delete-button" component="span">
-                                                                <DeleteRoundedIcon />
-                                                            </IconButton>
-                                                        </Grid>
-                                                        <Grid item xs={4}>
-                                                            <IconButton style={{color:"#dbc200"}} aria-label="mapping-button" component="span">
-                                                                <SettingsEthernetRoundedIcon />
-                                                            </IconButton>
-                                                        </Grid>
-                                                        <Grid item xs={4}>
-                                                            <IconButton style={{color:"#039c15"}} aria-label="annotate-button" component="span">
-                                                                <CreateRoundedIcon />
-                                                            </IconButton>
+                                                    <Grid container direction="row" justify="center">
+                                                        <Grid item>
+                                                            <Tooltip title="Delete document">
+                                                                <IconButton style={{color: "#db0e0b"}} aria-label="delete-button" component="span">
+                                                                    <DeleteRoundedIcon />
+                                                                </IconButton>
+                                                            </Tooltip>
                                                         </Grid>
                                                     </Grid>
                                                 </StyledTableCell>
@@ -216,10 +208,21 @@ export default function CustomizedTabs() {
                 </Grid>
 
                 <Grid item>
-                    <Grid container direction="row" justify="center">
-                        <Grid item xs={12}>
+                    <Grid container direction="row" spacing={1}>
+                        <Grid item>
                             <Button variant="contained" color="secondary" startIcon={<PublishRoundedIcon />}>
                                 Upload
+                            </Button>
+                        </Grid>
+                        <Grid item xs />
+                        <Grid item>
+                            <Button variant="contained" style={{backgroundColor:"#dbc200", color:"white"}} startIcon={<SettingsEthernetRoundedIcon />}>
+                                Map Concepts
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button variant="contained" style={{backgroundColor:"#039c15", color:"white"}} startIcon={<CreateRoundedIcon />}>
+                                Annotate
                             </Button>
                         </Grid>
                     </Grid>
@@ -233,7 +236,7 @@ export default function CustomizedTabs() {
             <Grid
                 container
                 direction="column"
-                spacing={5}
+                spacing={3}
             >
                 <Grid item>
                     <Grid container direction="row" justify="flex-start">

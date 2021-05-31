@@ -4,7 +4,7 @@ import App from "./layouts/App";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Project from "./views/Project";
-import AnnotationPage from "./views/AnnotationPage";
+import SA_AnnotationPage from "./views/SA_AnnotationPage";
 
 
 ReactDOM.render(

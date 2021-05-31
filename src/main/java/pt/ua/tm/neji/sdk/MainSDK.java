@@ -107,7 +107,7 @@ public class MainSDK {
         // Create Writer
         //Writer writer = new A1Writer();
         Writer writer = new JSONWriter();
-                
+        
         // Set document stream
         InputStream documentStream = new FileInputStream(documentFile);
 

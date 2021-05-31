@@ -1,9 +1,15 @@
 import AnnotationProjects from "./views/AnnotationProjects";
-import AnnotationPage from "./views/AnnotationPage";
+import SA_AnnotationPage from "./views/SA_AnnotationPage";
 import Mapping from "./views/Mapping";
 import Project from "./views/Project";
 
 const routes = [
+    {
+        path: "/stand-alone annotation",
+        name: "Stand-alone Annotation",
+        component: SA_AnnotationPage,
+        layout: "/app",
+    },
     {
         path: "/projects",
         name: "Annotation Projects",
@@ -13,7 +19,7 @@ const routes = [
     {
         path: "/annotation",
         name: "Annotation",
-        component: AnnotationPage,
+        component: SA_AnnotationPage,
         layout: "/app",
     },
     {

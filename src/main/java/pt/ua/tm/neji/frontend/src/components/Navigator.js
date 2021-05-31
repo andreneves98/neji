@@ -16,12 +16,16 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
 import StorageRoundedIcon from '@material-ui/icons/StorageRounded';
 import AccountTreeRoundedIcon from '@material-ui/icons/AccountTreeRounded';
+import FolderIcon from '@material-ui/icons/Folder';
+import routes from "../routes.js";
+import { Route } from "react-router-dom";
 
 const categories = [
   {
     id: 'Annotation',
     children: [
-      { id: 'Projects', icon: <CreateRoundedIcon />, active: true },
+      { id: 'Stand-alone Annotation', icon: <CreateRoundedIcon />, active: false },
+      { id: 'Projects', icon: <FolderIcon />, active: true },
       { id: 'Dictionaries', icon: <StorageRoundedIcon />, active: false },
       { id: 'Machine Learning Models', icon: <AccountTreeRoundedIcon />, active: false },
       { id: 'Preferences', icon: <SettingsIcon />, active: false },
@@ -86,6 +90,22 @@ function ListItemLink(props) {
 function Navigator(props) {
   const { classes, ...other } = props;
 
+  const getRoutes = (routes) => {
+    return routes.map((prop, key) => {
+        if (prop.layout === "/app") {
+            return (
+                <Route
+                    exact path={prop.layout + prop.path}
+                    render={(props) => <prop.component {...props} />}
+                    key={key}
+                />
+            );
+        } else {
+            return null;
+        }
+    });
+};
+
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
@@ -121,6 +141,7 @@ function Navigator(props) {
                 button
                 className={clsx(classes.item, active && classes.itemActiveItem)}
               >*/
+              //
               <ListItemLink href={"/app/"+childId.toLowerCase()} 
                 key={childId} 
                 button
