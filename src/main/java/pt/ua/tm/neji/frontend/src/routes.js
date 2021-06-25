@@ -34,6 +34,12 @@ const routes = [
         name: "Project",
         component: AnnotateProject,
         layout: "/app"
+    },
+    {
+        path: "/projects/:name/mapping",
+        name: "Project",
+        component: Mapping,
+        layout: "/app"
     }
 ]
 

@@ -196,7 +196,7 @@ const styles = {
     },
     main: {
         flexGrow: 1,
-        padding: theme.spacing(6, 4),
+        padding: theme.spacing(2, 1),
         background: '#eaeff1',
     },
     footer: {

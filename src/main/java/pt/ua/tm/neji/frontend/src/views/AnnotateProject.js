@@ -23,7 +23,7 @@ import SettingsEthernetRoundedIcon from '@material-ui/icons/SettingsEthernetRoun
 import SaveIcon from '@material-ui/icons/Save';
 import { ResizableBox, Resizable } from 'react-resizable';
 import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const styles = (theme) => ({
     paper: {
@@ -67,6 +67,7 @@ const styles = (theme) => ({
     splitScreen: {
         display: 'flex',
         flexDirection: 'row',
+        position: "relative",
     },
     leftPane: {
         width: '60%',
@@ -75,13 +76,14 @@ const styles = (theme) => ({
     rightPane: {
         width: '40%',
         //backgroundColor: "#ede7e6",
-        marginLeft: "10px",
-        paddingLeft: "20px",
-        position: "fixed"
+        marginLeft: "0px",
+        paddingLeft: "10px",
+        position: "fixed",
+        right: 25
     },
     root: {
         position: "fixed",
-        right: 25
+        right: 25,
     }
 });
 
@@ -101,6 +103,8 @@ const StyledTableCell = withStyles((theme) => ({
 function AnnotationPage(props) {
     const { classes } = props;
     let history = useHistory();
+    let location = useLocation();
+    let temp = location.pathname.split("/");
 
     const state = {
         width: 100,
@@ -117,163 +121,175 @@ function AnnotationPage(props) {
 
 
     return (
-        <Grid container direction="row" spacing={2}>
-            <Grid item xs={7}>
-                <Grid container direction="column" spacing={2}>
-                    <Grid item>
-                        <Grid container spacing={1} direction="row" alignItems="top">
-                            <Grid item xs={10}>
-                                <Typography style={{fontWeight:"bold", fontSize:"16px"}}>
-                                    Upregulation of chemokines and their receptors in Duchenne muscular 
-                                    dystrophy: potential for attenuation of myofiber necrosis
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Button variant="contained" color="secondary" startIcon={<SaveIcon />}>
-                                    Save
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item>
-                        <Grid container direction="row" spacing={1}>
-                            <Grid item>
-                                <Button onClick={history.goBack} variant="contained" style={{backgroundColor:"black", color:"white"}} startIcon={<ArrowBackIcon />}>
-                                    Back
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Tooltip title="Previous document">
-                                    <IconButton variant="contained" style={{color:"black"}}>
-                                        <ArrowBackIosIcon />
-                                    </IconButton>
-                                </Tooltip>
-                            </Grid>
-                            <Grid item>
-                                <Tooltip title="Next document">
-                                    <IconButton variant="contained" style={{color:"black"}}>
-                                        <ArrowForwardIosIcon />
-                                    </IconButton>
-                                </Tooltip>
-                            </Grid>
-                            <Grid item xs />
-                            <Grid item>
-                                <Button variant="contained" style={{backgroundColor:"#dbc200", color:"white"}} startIcon={<SettingsEthernetRoundedIcon />}>
-                                    Map Concepts
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Button variant="contained" className={classes.annotateButton} startIcon={<CreateRoundedIcon />}>
-                                    Auto Annotate
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item>
-                        <Grid container direction="row" justify="center">
-                            <Grid item xs={12}>
-                                <Paper className={classes.paper}>
-                                    <AppBar className={classes.loadBar} position="static" color="default" elevation={0}>
-                                        <Toolbar>
-                                            <Grid container spacing={2} alignItems="center">
-                                                <Grid item>
-                                                    <CreateRoundedIcon className={classes.block} color="inherit" />
-                                                </Grid>
-                                                <Grid item xs>
-                                                    <Typography color="textSecondary" variant="h6">Annotation Area</Typography>
-                                                </Grid>
-                                            </Grid>
-                                        </Toolbar>
-                                    </AppBar>
-                                    <div className={classes.contentWrapper}>
-                                        {/*<Typography color="textSecondary" align="center">
-                                            Load a text file to start annotating
-                                        </Typography>
-                                        <Resizable
-                                            height={state.height}
-                                            width={state.width}
-                                            onRezise={onRezise}
-                                        >
-                                            <div className="box" style={{ width: state.width + 'px', height: state.height + 'px' }}>
-                                                <span>Contents</span>
-                                            </div>
-                                            
-                                        </Resizable>*/}
-                                        <TextField
-                                            id="annotation-text-box"
-                                            multiline
-                                            fullWidth
-                                            variant="outlined"
-                                            placeholder="Load or copy a text file to start annotating"
-                                            margin="none"
-                                        />
-                                    </div>
-                                </Paper>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={5} className={classes.root}>
+        /*<div className={classes.splitScreen}>
+            <div className={classes.leftPane}>*/
 
-                <Grid
-                    container
-                    direction="column"
-                    spacing={1}
-                >
-                    <Grid item>
-                        <Grid container direction="row" justify="left">
-                            <Grid item>
-                                <Typography variant="h5">
-                                    Annotations
-                                </Typography>
+            
+            <Grid container direction="row" spacing={2}>
+                <Grid item xs={7}>
+                    <Grid container direction="column" spacing={2}>
+                        <Grid item>
+                            <Grid container spacing={1} direction="row" alignItems="top">
+                                <Grid item>
+                                    <Typography style={{fontWeight:"bold", fontSize:"16px"}}>
+                                        Upregulation of chemokines and their receptors in Duchenne muscular 
+                                        dystrophy: potential for attenuation of myofiber necrosis
+                                    </Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-
-                    <Grid item>
-                        <Grid container direction="row" justify="center">
-                            <Grid item xs={12}>
-                                <TableContainer component={Paper}>
-                                    <Table stickyHeader className={classes.table} aria-label="customized table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <StyledTableCell align="left">Term</StyledTableCell>
-                                                <StyledTableCell align="left">ID</StyledTableCell>
-                                                <StyledTableCell align="left">Type</StyledTableCell>
-                                                <StyledTableCell align="left">Score</StyledTableCell>
-                                                <StyledTableCell align="left">Offset</StyledTableCell>
-                                                <StyledTableCell align="left"></StyledTableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            <TableRow>
-                                                <StyledTableCell component="th" scope="row" align="left">Term</StyledTableCell>
-                                                <StyledTableCell align="left">ID</StyledTableCell>
-                                                <StyledTableCell align="left">Type</StyledTableCell>
-                                                <StyledTableCell align="left">Score</StyledTableCell>
-                                                <StyledTableCell align="left">Offset</StyledTableCell>
-                                                <StyledTableCell align="left">
-                                                    <Grid container direction="row" justify="center">
-                                                        <Grid item>
-                                                            <Tooltip title="Delete Annotation">
-                                                                <IconButton style={{ color: "#db0e0b" }} aria-label="delete-button" component="span">
-                                                                    <DeleteRoundedIcon />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </Grid>
+                        <Grid item>
+                            <Grid container direction="row" spacing={1}>
+                                <Grid item>
+                                    <Button onClick={history.goBack} variant="contained" style={{backgroundColor:"black", color:"white"}} startIcon={<ArrowBackIcon />}>
+                                        Back
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Tooltip title="Previous document">
+                                        <IconButton variant="contained" style={{color:"black"}}>
+                                            <ArrowBackIosIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid>
+                                <Grid item>
+                                    <Tooltip title="Next document">
+                                        <IconButton variant="contained" style={{color:"black"}}>
+                                            <ArrowForwardIosIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid>
+                                <Grid item xs />
+                                <Grid item>
+                                    <Button variant="contained" color="secondary" startIcon={<SaveIcon />}>
+                                        Save
+                                    </Button>
+                                </Grid>
+                                {/*<Grid item>
+                                    <Button variant="contained" style={{backgroundColor:"#dbc200", color:"white"}} 
+                                        startIcon={<SettingsEthernetRoundedIcon />}
+                                        href={location.pathname + "/mapping"}
+                                    >
+                                        Map Concepts
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button variant="contained" className={classes.annotateButton} startIcon={<CreateRoundedIcon />}>
+                                        Auto Annotate
+                                    </Button>
+                                </Grid>*/}
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <Grid container direction="row" justify="center">
+                                <Grid item xs={12}>
+                                    <Paper className={classes.paper}>
+                                        <AppBar className={classes.loadBar} position="static" color="default" elevation={0}>
+                                            <Toolbar>
+                                                <Grid container spacing={2} alignItems="center">
+                                                    <Grid item>
+                                                        <CreateRoundedIcon className={classes.block} color="inherit" />
                                                     </Grid>
-                                                </StyledTableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
+                                                    <Grid item xs>
+                                                        <Typography color="textSecondary" variant="h6">Annotation Area</Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </Toolbar>
+                                        </AppBar>
+                                        <div className={classes.contentWrapper}>
+                                            {/*<Typography color="textSecondary" align="center">
+                                                Load a text file to start annotating
+                                            </Typography>
+                                            <Resizable
+                                                height={state.height}
+                                                width={state.width}
+                                                onRezise={onRezise}
+                                            >
+                                                <div className="box" style={{ width: state.width + 'px', height: state.height + 'px' }}>
+                                                    <span>Contents</span>
+                                                </div>
+                                                
+                                            </Resizable>*/}
+                                            <TextField
+                                                id="annotation-text-box"
+                                                multiline
+                                                fullWidth
+                                                variant="outlined"
+                                                placeholder="Load or copy a text file to start annotating"
+                                                margin="none"
+                                            />
+                                        </div>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        
+                    </Grid>
+                    {/*</div>*/}
+                </Grid>
+                <Grid item xs={5} className={classes.root}>
+                {/*<div className={classes.rightPane}>*/}
+
+                
+                    <Grid
+                        container
+                        direction="column"
+                        spacing={1}
+                    >
+                        <Grid item>
+                            <Grid container direction="row" justify="left">
+                                <Grid item>
+                                    <Typography variant="h5">
+                                        Annotations
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid item>
+                            <Grid container direction="row" justify="center">
+                                <Grid item xs={12}>
+                                    <TableContainer component={Paper}>
+                                        <Table stickyHeader className={classes.table} aria-label="customized table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <StyledTableCell align="left">Term</StyledTableCell>
+                                                    <StyledTableCell align="left">ID</StyledTableCell>
+                                                    <StyledTableCell align="left">Type</StyledTableCell>
+                                                    <StyledTableCell align="left">Score</StyledTableCell>
+                                                    <StyledTableCell align="left">Offset</StyledTableCell>
+                                                    <StyledTableCell align="left"></StyledTableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                <TableRow>
+                                                    <StyledTableCell component="th" scope="row" align="left">Term</StyledTableCell>
+                                                    <StyledTableCell align="left">ID</StyledTableCell>
+                                                    <StyledTableCell align="left">Type</StyledTableCell>
+                                                    <StyledTableCell align="left">Score</StyledTableCell>
+                                                    <StyledTableCell align="left">Offset</StyledTableCell>
+                                                    <StyledTableCell align="left">
+                                                        <Grid container direction="row" justify="center">
+                                                            <Grid item>
+                                                                <Tooltip title="Delete Annotation">
+                                                                    <IconButton style={{ color: "#db0e0b" }} aria-label="delete-button" component="span">
+                                                                        <DeleteRoundedIcon />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </StyledTableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        //</div>
     );
 }
 

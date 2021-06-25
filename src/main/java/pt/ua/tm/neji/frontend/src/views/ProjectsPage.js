@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper';
 import { Grid } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-//import { Link } from '@material-ui/core';
 import { useLocation, Link } from 'react-router-dom';
 import Project from './Project';
 

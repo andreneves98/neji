@@ -3,27 +3,25 @@ import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import { Tabs, Tab } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { FormControl, Grid, OutlinedInput, InputAdornment, InputLabel, TextField, createMuiTheme, Tooltip } from '@material-ui/core';
+import { Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, useHistory, Link } from 'react-router-dom';
 import PublishRoundedIcon from '@material-ui/icons/PublishRounded';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import SettingsEthernetRoundedIcon from '@material-ui/icons/SettingsEthernetRounded';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const StyledTabs = withStyles({
     indicator: {
@@ -126,6 +124,37 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+    root: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
+}))(MenuItem);
+
 function createDocsData(title, annotations, lastUpdate) {
     return { title, annotations, lastUpdate };
 }
@@ -156,7 +185,17 @@ const typesRows = [
 export default function CustomizedTabs() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const location = useLocation();
+    const history = useHistory();
+
+    const handleAnnotationClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -192,7 +231,7 @@ export default function CustomizedTabs() {
                                                     <Grid container direction="row" justify="center">
                                                         <Grid item>
                                                             <Tooltip title="Delete document">
-                                                                <IconButton style={{color: "#db0e0b"}} aria-label="delete-button" component="span">
+                                                                <IconButton style={{ color: "#db0e0b" }} aria-label="delete-button" component="span">
                                                                     <DeleteRoundedIcon />
                                                                 </IconButton>
                                                             </Tooltip>
@@ -217,15 +256,44 @@ export default function CustomizedTabs() {
                         </Grid>
                         <Grid item xs />
                         <Grid item>
-                            <Button variant="contained" style={{backgroundColor:"#dbc200", color:"white"}} startIcon={<SettingsEthernetRoundedIcon />}>
+                            <Button variant="contained" style={{ backgroundColor: "#dbc200", color: "white" }}
+                                startIcon={<SettingsEthernetRoundedIcon />}
+                                href={location.pathname + "/mapping"}
+                            >
                                 Map Concepts
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" style={{backgroundColor:"#039c15", color:"white"}} startIcon={<CreateRoundedIcon />}
-                                    href={location.pathname + "/annotation"}>
+                            <Button variant="contained" style={{ backgroundColor: "#039c15", color: "white" }} startIcon={<CreateRoundedIcon />}
+                                //href={location.pathname + "/annotation"}
+                                onClick={handleAnnotationClick}>
                                 Annotate
                             </Button>
+                            <StyledMenu
+                                id="customized-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleMenuClose}
+                            >
+                                <Link to={location.pathname + "/annotation"} style={{ color: '#000', textDecoration: 'none' }}>
+                                    <StyledMenuItem>
+                                        <ListItemIcon>
+                                            <AutorenewIcon fontSize="small" />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Auto Annotation" />
+                                    </StyledMenuItem>
+                                </Link>
+                                <hr />
+                                <Link to={location.pathname + "/annotation"} style={{ color: '#000', textDecoration: 'none' }}>
+                                    <StyledMenuItem>
+                                        <ListItemIcon>
+                                            <PanToolIcon fontSize="small" />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Manual Curation" />
+                                    </StyledMenuItem>
+                                </Link>
+                            </StyledMenu>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -312,7 +380,7 @@ export default function CustomizedTabs() {
                                         {typesRows.map((row) => (
                                             <StyledTableRow key={row.type}>
                                                 <StyledTableCell component="th" scope="row" align="center">{row.type}</StyledTableCell>
-                                                <StyledTableCell align="center" style={{color:row.color, fontWeight:"bold"}}>{row.color}</StyledTableCell>
+                                                <StyledTableCell align="center" style={{ color: row.color, fontWeight: "bold" }}>{row.color}</StyledTableCell>
                                             </StyledTableRow>
                                         ))}
                                     </TableBody>
@@ -337,6 +405,11 @@ export default function CustomizedTabs() {
 
     return (
         <div className={classes.root}>
+            <div style={{ paddingBottom: '20px' }}>
+                <Button onClick={history.goBack} variant="contained" style={{ backgroundColor: "black", color: "white" }} startIcon={<ArrowBackIcon />}>
+                    Back
+                </Button>
+            </div>
             <div className={classes.style}>
                 <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
                     <StyledTab label="Documents" {...a11yProps(0)} />
