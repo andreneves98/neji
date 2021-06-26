@@ -155,12 +155,12 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
-function createDocsData(title, annotations, lastUpdate) {
-    return { title, annotations, lastUpdate };
+function createDocsData(id, title, annotations, lastUpdate) {
+    return { id, title, annotations, lastUpdate };
 }
 
-function createMembersData(name, role) {
-    return { name, role };
+function createMembersData(first_name, last_name, role, id) {
+    return { first_name, last_name, role, id };
 }
 
 function createTypesData(type, color) {
@@ -168,14 +168,14 @@ function createTypesData(type, color) {
 }
 
 const docsRows = [
-    createDocsData('Upregulation of chemokines and their receptors in Duchenne' +
+    createDocsData(1, 'Upregulation of chemokines and their receptors in Duchenne' +
         ' muscular dystrophy: potential for attenuation of myofiber necrosis', 245, '3 minutes ago'),
-    createDocsData('Sesamin extends the mean lifespan of fruit flies', 564, '2 hours ago'),
+    createDocsData(2, 'Sesamin extends the mean lifespan of fruit flies', 564, '2 hours ago'),
 ];
 
 const membersRows = [
-    createMembersData('John', 'Project Manager'),
-    createMembersData('Alice', 'Annotator'),
+    createMembersData('Carlos', 'Almeida', 'Project Manager', 'd63c6c46-b867-4066-9e21-f174f258b51e'),
+    createMembersData('David', 'Soares', 'Annotator', 'bd6f94c4-13a1-42e5-b223-a376745ecbb9'),
 ];
 
 const typesRows = [
@@ -215,6 +215,7 @@ export default function CustomizedTabs() {
                                 <Table className={classes.table} aria-label="customized table">
                                     <TableHead>
                                         <TableRow>
+                                            <StyledTableCell align="left">#</StyledTableCell>
                                             <StyledTableCell align="left">Title</StyledTableCell>
                                             <StyledTableCell align="center">Annotations</StyledTableCell>
                                             <StyledTableCell align="center">Last Update</StyledTableCell>
@@ -224,7 +225,8 @@ export default function CustomizedTabs() {
                                     <TableBody>
                                         {docsRows.map((row) => (
                                             <StyledTableRow key={row.name}>
-                                                <StyledTableCell component="th" scope="row" align="left">{row.title}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row" align="left">{row.id}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.title}</StyledTableCell>
                                                 <StyledTableCell align="center">{row.annotations}</StyledTableCell>
                                                 <StyledTableCell align="center">{row.lastUpdate}</StyledTableCell>
                                                 <StyledTableCell align="center">
@@ -310,20 +312,24 @@ export default function CustomizedTabs() {
             >
                 <Grid item>
                     <Grid container direction="row" justify="flex-start">
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <TableContainer component={Paper}>
                                 <Table className={classes.table} aria-label="customized table">
                                     <TableHead>
                                         <TableRow>
-                                            <StyledTableCell align="center">Name</StyledTableCell>
+                                            <StyledTableCell align="center">First Name</StyledTableCell>
+                                            <StyledTableCell align="center">Last Name</StyledTableCell>
                                             <StyledTableCell align="center">Role</StyledTableCell>
+                                            <StyledTableCell align="center">ID</StyledTableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {membersRows.map((row) => (
                                             <StyledTableRow key={row.name}>
-                                                <StyledTableCell component="th" scope="row" align="center">{row.name}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row" align="center">{row.first_name}</StyledTableCell>
+                                                <StyledTableCell align="center">{row.last_name}</StyledTableCell>
                                                 <StyledTableCell align="center">{row.role}</StyledTableCell>
+                                                <StyledTableCell align="center">{row.id}</StyledTableCell>
                                             </StyledTableRow>
                                         ))}
                                     </TableBody>
