@@ -6,24 +6,29 @@ module.exports = (sequelize, Sequelize) => {
         // foreign key from Project
         proj_id: {
             type: Sequelize.INTEGER,
-            /*references: 'projects',
-            referencesKey: 'proj_id'*/
+            primaryKey: true,
             references: {
                 model: 'projects',
                 key: 'proj_id',
                 deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-            }
+            },
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         },
         // foreign key from Member
         member_id: {
-            type: Sequelize.INTEGER,
-            /*references: 'members',
-            referencesKey: 'member_id'*/
+            type: Sequelize.UUID,
+            primaryKey: true,
             references: {
                 model: 'members',
                 key: 'member_id',
                 deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-            }
+            },
+            onDelete: 'CASCADE',
+        },
+        role: {
+            type: Sequelize.STRING,
+            allowNull: false,
         },
     });
 

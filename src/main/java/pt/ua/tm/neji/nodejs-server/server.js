@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 require("./app/routes/project.routes")(app);
 require("./app/routes/document.routes")(app);
 require("./app/routes/member.routes")(app);
+require("./app/routes/annotation.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

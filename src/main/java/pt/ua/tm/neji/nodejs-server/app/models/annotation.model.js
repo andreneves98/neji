@@ -32,13 +32,12 @@ module.exports = (sequelize, Sequelize) => {
         // foreign key from Document
         doc_id: {
             type: Sequelize.INTEGER,
-            /*references: 'documents',
-            referencesKey: 'doc_id'*/
             references: {
                 model: 'documents',
                 key: 'doc_id',
                 deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-            }
+            },
+            onDelete: 'CASCADE',
         },
     });
 

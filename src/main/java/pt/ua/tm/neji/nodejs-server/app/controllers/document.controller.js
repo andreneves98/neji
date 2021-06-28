@@ -15,6 +15,7 @@ exports.create = (req, res) => {
     // Create a document
     const document = {
         title: req.body.title,
+        proj_id: req.body.proj_id
     }
 
     // Save document in the database

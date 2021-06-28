@@ -21,14 +21,13 @@ module.exports = (sequelize, Sequelize) => {
         // foreign key from Project
         proj_id: {
             type: Sequelize.INTEGER,
-            /*references: 'projects',
-            referencesKey: 'proj_id'*/
             references: {
                 model: 'projects',
                 key: 'proj_id',
                 deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-            }
-        },
+            },
+            onDelete: 'CASCADE',
+        }
     });
 
     return Document;

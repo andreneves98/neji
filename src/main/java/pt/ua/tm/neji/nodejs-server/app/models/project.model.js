@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
         status: {
             type: Sequelize.STRING,
             defaultValue: "Open"
-        }
+        },
     });
 
     return Project;
