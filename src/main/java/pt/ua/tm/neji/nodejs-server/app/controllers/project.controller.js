@@ -49,15 +49,15 @@ exports.findAll = (req, res) => {
 
 // Find a single project with a name: [GET] api/projects/:name
 exports.findOne = (req, res) => {
-    const proj_name = req.params.proj_name;
+    const proj_id = req.params.proj_id;
 
-    Project.findByPk(proj_name)
+    Project.findByPk(proj_id)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Project with proj_name=" + proj_name
+                message: "Error retrieving Project with proj_id=" + proj_id
             });
         });
 };

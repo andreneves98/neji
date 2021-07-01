@@ -13,9 +13,15 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             unique: true
         },
+        // foreign key from Members
         manager: {
-            type: Sequelize.STRING,
-            allowNull: false
+            type: Sequelize.UUID,
+            references: {
+                model: 'members',
+                key: 'member_id',
+                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+            },
+            onDelete: 'SET NULL',
         },
         n_documents: {
             type: Sequelize.INTEGER,

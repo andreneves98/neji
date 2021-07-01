@@ -8,7 +8,14 @@ var corsOptions = {
   origin: "http://localhost:8081"
 };
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+
+// https://enable-cors.org/server_expressjs.html
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -33,6 +40,7 @@ require("./app/routes/project.routes")(app);
 require("./app/routes/document.routes")(app);
 require("./app/routes/member.routes")(app);
 require("./app/routes/annotation.routes")(app);
+require("./app/routes/participates.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

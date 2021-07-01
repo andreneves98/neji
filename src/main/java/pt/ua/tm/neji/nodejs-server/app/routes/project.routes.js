@@ -9,8 +9,8 @@ module.exports = app => {
     // Retrieve all Projects
     router.get("/", projects.findAll);
 
-    // Retrieve a single Project with name
-    router.get("/:proj_name", projects.findOne);
+    // Retrieve a single Project with id
+    router.get("/:proj_id", projects.findOne);
 
     // Update a Project by id
     router.put("/:proj_id", projects.updateByID);
