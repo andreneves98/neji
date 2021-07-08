@@ -137,6 +137,31 @@ exports.deleteByID = (req, res) => {
         });
 };
 
+// Delete a project by the name in the request: [PUT] api/projects?proj_name=name
+exports.deleteByName = (req, res) => {
+    const proj_name = req.query.proj_name;
+
+    Project.destroy(req.body, {
+        where: { proj_name: proj_name }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Project was deleted successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete Project with proj_name=${proj_name}. Maybe Project was not found or req.body is empty!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error deleting Project with proj_name=" + proj_name
+            });
+        });
+};
+
 // Delete all Projects from the database: [DELETE] api/projects
 exports.deleteAll = (req, res) => {
     Project.destroy({

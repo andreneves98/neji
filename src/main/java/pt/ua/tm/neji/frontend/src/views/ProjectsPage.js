@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,6 +11,9 @@ import { Grid } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
+import { Tooltip } from '@material-ui/core';
 import { useLocation, Link } from 'react-router-dom';
 import Project from './Project';
 import Modal from '@material-ui/core/Modal';
@@ -83,6 +86,8 @@ export default function ProjectsPage() {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState("");
     const [description, setDescription] = React.useState("");
+    const [projects, setProjects] = React.useState([]);
+    const [reload, setReload] = React.useState(false);
 
     const handlePopupOpen = () => {
         setOpen(true);
@@ -104,24 +109,62 @@ export default function ProjectsPage() {
         console.log(name, description);
         var data = {
             proj_name: name,
-            manager: "daf3dae5-c401-4ad8-ac8d-b586502bce5d"
+            manager: "e0881df7-6361-47a0-a92d-12d18e0edd02"
         };
 
         ProjectDataService.create(data)
             .then(response => {
                 console.log(response.data);
-                rows.push({
+                /*rows.push({
                     name: response.data.proj_name,
                     manager: response.data.manager,
                     documents: response.data.n_documents,
                     members: response.data.n_members,
                     status: response.data.status
-                });
+                });*/
+            })
+            .catch(e => {
+                console.log(e);
+            });
+
+        setReload(true);    // trigger a re-render
+        handlePopupClose();
+    }
+
+    const handleDeleteProject = (proj_id) => {
+        console.log("deleeeeeete");
+        ProjectDataService.deleteByID(proj_id)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+
+        setReload(true);
+    }
+
+    const getProjects = () => {
+        var data;
+        ProjectDataService.getAll()
+            .then(response => {
+                console.log(response.data);
+                data = response.data;
+                setProjects(data);
             })
             .catch(e => {
                 console.log(e);
             });
     }
+
+    // Replaces React class lifecycle methods like componentDidMount, componentDidUpdate and componentWillUnmount
+    useEffect(() => {
+        getProjects();  // first render
+        if (reload) {
+            getProjects();
+            setReload(false);
+        }
+    }, [reload]);
 
     return (
         <Grid
@@ -136,29 +179,51 @@ export default function ProjectsPage() {
                             <Table className={classes.table} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell>Name</StyledTableCell>
+                                        <StyledTableCell align="left">ID</StyledTableCell>
+                                        <StyledTableCell align="center">Name</StyledTableCell>
                                         <StyledTableCell align="center">Manager</StyledTableCell>
                                         <StyledTableCell align="center">Documents</StyledTableCell>
                                         <StyledTableCell align="center">Members</StyledTableCell>
                                         <StyledTableCell align="center">Status</StyledTableCell>
+                                        <StyledTableCell align="center"></StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {rows.map((row) => (
-                                        <StyledTableRow key={row.name}>
+                                    {projects.length > 0 ? projects.map((project) => (
+                                        <StyledTableRow key={project.proj_id}>
+                                            <StyledTableCell align="left">{project.proj_id}</StyledTableCell>
                                             <StyledTableCell component="th" scope="row">
-                                                <Link to={location.pathname + "/" + row.name.toLowerCase().replace(" ", "-")}>
-                                                    {row.name}
+                                                <Link to={location.pathname + "/" + project.proj_name.toLowerCase().replace(" ", "-")}>
+                                                    {project.proj_name}
                                                 </Link>
                                             </StyledTableCell>
-                                            <StyledTableCell align="center">{row.manager}</StyledTableCell>
-                                            <StyledTableCell align="center">{row.documents}</StyledTableCell>
-                                            <StyledTableCell align="center">{row.members}</StyledTableCell>
-                                            <StatusStyledCell align="center">
-                                                {row.status}
-                                            </StatusStyledCell>
+                                            <StyledTableCell align="center">{project.manager}</StyledTableCell>
+                                            <StyledTableCell align="center">{project.n_documents}</StyledTableCell>
+                                            <StyledTableCell align="center">{project.n_members}</StyledTableCell>
+                                            <StatusStyledCell align="center">{project.status}</StatusStyledCell>
+                                            <StyledTableCell align="center">
+                                                <Tooltip title="Delete Project">
+                                                    <IconButton 
+                                                        style={{ color: "#db0e0b" }} 
+                                                        aria-label="delete-button" 
+                                                        size="small"
+                                                        onClick={() => handleDeleteProject(project.proj_id)}
+                                                    >
+                                                        <DeleteRoundedIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </StyledTableCell>
                                         </StyledTableRow>
-                                    ))}
+                                    ))
+                                        : <StyledTableRow>
+                                            <StyledTableCell component="th" scope="row">{"null"}</StyledTableCell>
+                                            <StyledTableCell align="center">{"null"}</StyledTableCell>
+                                            <StyledTableCell align="center">{"null"}</StyledTableCell>
+                                            <StyledTableCell align="center">{"null"}</StyledTableCell>
+                                            <StyledTableCell align="center">{"null"}</StyledTableCell>
+                                            <StyledTableCell align="center">{"null"}</StyledTableCell>
+                                        </StyledTableRow>}
+
                                 </TableBody>
                             </Table>
                         </TableContainer>
@@ -245,7 +310,6 @@ export default function ProjectsPage() {
                                                 </Button>
                                             </Grid>
                                         </Grid>
-
                                     </Grid>
                                 </div>
                             </Fade>

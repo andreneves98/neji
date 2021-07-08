@@ -29,9 +29,13 @@ class ProjectDataService {
         return http.delete("/projects");
     }
 
-    delete(proj_id) {
+    deleteByID(proj_id) {
         return http.delete(`/projects/${proj_id}`);
     }
+
+    /*deleteByName(proj_name) {
+        return http.delete(`/projects?proj_name=${proj_name}`);
+    }*/
 }
 
 export default new ProjectDataService();

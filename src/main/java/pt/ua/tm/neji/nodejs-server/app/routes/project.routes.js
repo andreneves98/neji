@@ -21,6 +21,9 @@ module.exports = app => {
     // Delete a Project by id
     router.delete("/:proj_id", projects.deleteByID);
 
+    // Delete a Project by id
+    //router.delete("/", projects.deleteByName);
+
     // Remove all Projects
     router.delete("/", projects.deleteAll);
 
