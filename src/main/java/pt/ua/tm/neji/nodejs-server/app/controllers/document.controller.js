@@ -1,11 +1,13 @@
 const db = require("../models");
 const Document = db.documents;
 const Op = db.Sequelize.Op;
+const fn = db.Sequelize.fn;
+const col = db.Sequelize.col;
 
 // Create a new document: [POST] api/documents
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.title) {
+    if (!req.body.title && !req.body.proj_id) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -32,11 +34,11 @@ exports.create = (req, res) => {
 
 // Retrieve all documents from the database: [GET] api/documents
 exports.findAll = (req, res) => {
-    const title = req.query.title;
+    const proj_id = req.query.proj_id;
     // if we want to find all documents with a given name
-    var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
+    //var condition = proj_id ? { proj_id: { [Op.iLike]: `%${proj_id}%` } } : null;
 
-    Document.findAll({ where: condition })
+    Document.findAll({ where: { proj_id: proj_id } })
     .then(data => {
         res.send(data);
     })
@@ -61,6 +63,24 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+// Get the number of documents belonging to a project by proj_id [GET] api/documents/count?proj_id=proj_id
+exports.countDocs = (req, res) => {
+    const proj_id = req.params.proj_id;
+
+    Document.findAll({
+        attributes: {
+            include: [
+                [fn('COUNT', col('*')), 'n_documents'],
+            ]
+        },
+        where: {
+            proj_id: proj_id
+        }
+    })
+
+    // SELECT COUNT(*) from documents WHERE proj_id=proj_id
+}
 
 // Update a document by the id in the request: [PUT] api/documents/:doc_id
 exports.updateByID = (req, res) => {

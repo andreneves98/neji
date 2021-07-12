@@ -13,11 +13,6 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             unique: true
         },
-        n_annotations: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-            defaultValue: 0
-        },
         // foreign key from Project
         proj_id: {
             type: Sequelize.INTEGER,

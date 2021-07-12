@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
@@ -22,6 +22,7 @@ import SettingsEthernetRoundedIcon from '@material-ui/icons/SettingsEthernetRoun
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DocumentDataService from '../services/document.service';
 
 const StyledTabs = withStyles({
     indicator: {
@@ -186,8 +187,13 @@ export default function CustomizedTabs() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const location = useLocation();
+    const { pathname, state } = useLocation();
     const history = useHistory();
+    const [projectDocs, setProjectDocs] = React.useState([]);
+    const [projName, setProjName] = React.useState(null);
+    const [projId, setProjId] = React.useState(null);
+    const [reload, setReload] = React.useState(false);
+    const mountedRef = React.useRef(false);
 
     const handleAnnotationClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -200,6 +206,45 @@ export default function CustomizedTabs() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const getProjectDocs = () => {
+        console.log("GET PROJECT DOCS");
+        DocumentDataService.getByProjID(state.projId)
+            .then(response => {
+                if(mountedRef.current) {
+                    setProjectDocs(response.data);
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+    // Unmount and cleanup
+    useEffect(() => {
+        mountedRef.current = true;
+        return () => {
+            mountedRef.current = false;
+        }
+    }, []);
+
+    // Update project name and ID to fetch the data
+    useEffect(() => {
+        if(mountedRef.current) {
+            setProjName(state.projName);
+            setProjId(state.projId);
+        }
+    }, [state.projName, state.projId]);
+
+    // Replaces React class lifecycle methods like componentDidMount, componentDidUpdate and componentWillUnmount
+    useEffect(() => {
+        // Runs everytime 'reload' changes state to re-render the components
+        getProjectDocs();
+        if(mountedRef.current) {
+            setReload(false);
+        }
+        
+    }, [reload]);
 
     const documentsTab = () => {
         return (
@@ -223,12 +268,12 @@ export default function CustomizedTabs() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {docsRows.map((row) => (
-                                            <StyledTableRow key={row.name}>
-                                                <StyledTableCell component="th" scope="row" align="left">{row.id}</StyledTableCell>
-                                                <StyledTableCell align="left">{row.title}</StyledTableCell>
-                                                <StyledTableCell align="center">{row.annotations}</StyledTableCell>
-                                                <StyledTableCell align="center">{row.lastUpdate}</StyledTableCell>
+                                        {console.log(projectDocs), projectDocs.map((doc) => (
+                                            <StyledTableRow key={doc.doc_id}>
+                                                <StyledTableCell component="th" scope="row" align="left">{doc.doc_id}</StyledTableCell>
+                                                <StyledTableCell align="left">{doc.title}</StyledTableCell>
+                                                <StyledTableCell align="center">{null}</StyledTableCell>
+                                                <StyledTableCell align="center">{doc.updatedAt}</StyledTableCell>
                                                 <StyledTableCell align="center">
                                                     <Grid container direction="row" justify="center">
                                                         <Grid item>
@@ -260,14 +305,14 @@ export default function CustomizedTabs() {
                         <Grid item>
                             <Button variant="contained" style={{ backgroundColor: "#dbc200", color: "white" }}
                                 startIcon={<SettingsEthernetRoundedIcon />}
-                                href={location.pathname + "/mapping"}
+                                href={pathname + "/mapping"}
                             >
                                 Map Concepts
                             </Button>
                         </Grid>
                         <Grid item>
                             <Button variant="contained" style={{ backgroundColor: "#039c15", color: "white" }} startIcon={<CreateRoundedIcon />}
-                                //href={location.pathname + "/annotation"}
+                                //href={pathname + "/annotation"}
                                 onClick={handleAnnotationClick}>
                                 Annotate
                             </Button>
@@ -278,7 +323,7 @@ export default function CustomizedTabs() {
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
                             >
-                                <Link to={location.pathname + "/annotation"} style={{ color: '#000', textDecoration: 'none' }}>
+                                <Link to={pathname + "/annotation"} style={{ color: '#000', textDecoration: 'none' }}>
                                     <StyledMenuItem>
                                         <ListItemIcon>
                                             <AutorenewIcon fontSize="small" />
@@ -287,7 +332,7 @@ export default function CustomizedTabs() {
                                     </StyledMenuItem>
                                 </Link>
                                 <hr />
-                                <Link to={location.pathname + "/annotation"} style={{ color: '#000', textDecoration: 'none' }}>
+                                <Link to={pathname + "/annotation"} style={{ color: '#000', textDecoration: 'none' }}>
                                     <StyledMenuItem>
                                         <ListItemIcon>
                                             <PanToolIcon fontSize="small" />

@@ -9,8 +9,8 @@ class DocumentDataService {
         return http.get(`/documents/${doc_id}`);
     }
 
-    getByTitle(title) {
-        return http.get(`/documents?title=${title}`);
+    getByProjID(proj_id) {
+        return http.get(`/documents?proj_id=${proj_id}`);
     }
 
     create(data) {
@@ -33,3 +33,5 @@ class DocumentDataService {
         return http.delete(`/documents/${doc_id}`);
     }
 }
+
+export default new DocumentDataService();

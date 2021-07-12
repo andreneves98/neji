@@ -1,5 +1,5 @@
 // This Sequelize Model represents a Project table in PostgreSQL database. 
-// These columns will be generated automatically: proj_id, proj_name, manager, n_documents, n_members, status, createdAt, updatedAt.
+// These columns will be generated automatically: proj_id, proj_name, manager, status, description, createdAt, updatedAt.
 
 module.exports = (sequelize, Sequelize) => {
     const Project = sequelize.define("projects", {
@@ -15,27 +15,23 @@ module.exports = (sequelize, Sequelize) => {
         },
         // foreign key from Members
         manager: {
-            type: Sequelize.UUID,
+            type: Sequelize.STRING,
             references: {
                 model: 'members',
-                key: 'member_id',
+                key: 'username',
                 deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
             },
             onDelete: 'SET NULL',
-        },
-        n_documents: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-            defaultValue: 0
-        },
-        n_members: {
-            type: Sequelize.INTEGER,
-            defaultValue: 1
         },
         status: {
             type: Sequelize.STRING,
             defaultValue: "Open"
         },
+        description: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            defaultValue: "No description provided."
+        }
     });
 
     return Project;

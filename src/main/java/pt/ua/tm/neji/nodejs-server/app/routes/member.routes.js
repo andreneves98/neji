@@ -10,13 +10,13 @@ module.exports = app => {
     router.get("/", members.findAll);
 
     // Retrieve a single member with id
-    router.get("/:member_id", members.findOne);
+    router.get("/:username", members.findOne);
 
     // Update a member by id
-    router.put("/:member_id", members.updateByID);
+    router.put("/:username", members.updateByUsername);
 
     // Delete a member by id
-    router.delete("/:member_id", members.deleteByID);
+    router.delete("/:username", members.deleteByUsername);
 
     // Remove all members
     router.delete("/", members.deleteAll);

@@ -22,6 +22,7 @@ import Fade from '@material-ui/core/Fade';
 import Typography from '@material-ui/core/Typography';
 import { TextField } from '@material-ui/core';
 import ProjectDataService from "../services/project.service";
+import DocumentDataService from "../services/document.service";
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -85,9 +86,12 @@ export default function ProjectsPage() {
     const location = useLocation();
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState("");
-    const [description, setDescription] = React.useState("");
+    const [description, setDescription] = React.useState(null);
     const [projects, setProjects] = React.useState([]);
+    const [projectDocs, setProjectDocs] = React.useState([]);
     const [reload, setReload] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const mountedRef = React.useRef(false); // this ref will track if the component is mounted
 
     const handlePopupOpen = () => {
         setOpen(true);
@@ -107,64 +111,145 @@ export default function ProjectsPage() {
 
     const handleCreateProject = () => {
         console.log(name, description);
-        var data = {
-            proj_name: name,
-            manager: "e0881df7-6361-47a0-a92d-12d18e0edd02"
-        };
-
+        var data;
+        if (description !== null) {
+            data = {
+                proj_name: name,
+                description: description,
+                manager: "marcelovieira39"
+            };
+        }
+        else {
+            data = {
+                proj_name: name,
+                manager: "marcelovieira39"
+            };
+        }
+        
         ProjectDataService.create(data)
             .then(response => {
                 console.log(response.data);
-                /*rows.push({
-                    name: response.data.proj_name,
-                    manager: response.data.manager,
-                    documents: response.data.n_documents,
-                    members: response.data.n_members,
-                    status: response.data.status
-                });*/
+                if(mountedRef.current) {
+                    setLoading(true);
+                    setReload(true);    // trigger a re-render
+                    handlePopupClose();
+                    setDescription(null);   // reset description in case is empty in the next project creation
+                }
+                
             })
             .catch(e => {
                 console.log(e);
+            })
+            .finally(() => {
+                if(mountedRef.current) {
+                    setLoading(false); 
+                 }
             });
-
-        setReload(true);    // trigger a re-render
-        handlePopupClose();
     }
 
     const handleDeleteProject = (proj_id) => {
-        console.log("deleeeeeete");
         ProjectDataService.deleteByID(proj_id)
             .then(response => {
-                console.log(response);
+                if(mountedRef.current) {
+                    setLoading(true);
+                    console.log(response);
+                    setReload(true);
+                }
             })
             .catch(e => {
                 console.log(e);
+            })
+            .finally(() => {
+                if(mountedRef.current) {
+                    setLoading(false); 
+                }
             });
-
-        setReload(true);
     }
 
     const getProjects = () => {
+        console.log("GET PROJECTS!!!!");
         var data;
+        // Fetch all projects without nr_documents and nr_members
         ProjectDataService.getAll()
             .then(response => {
+                if(mountedRef.current) {
+                    setLoading(true); 
+                 }
                 console.log(response.data);
                 data = response.data;
-                setProjects(data);
+
+                // Fetch the number of documents that belong to each project
+                data.forEach((project, index) => {
+                    DocumentDataService.getByProjID(project.proj_id)
+                        .then(response => {
+                            console.log("DOCUMENTS FETCH", response);
+                            var nr_documents = response.data.length;
+                            //console.log(nr_documents);
+                            
+                            project["nr_documents"] = nr_documents;
+                            //console.log(project);
+                            //console.log("data", data);
+
+                            if(index === data.length - 1) {
+                                if(mountedRef.current) {
+                                    setProjects(data);
+                                }
+                            }
+                                
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+                });
             })
             .catch(e => {
                 console.log(e);
+            })
+            .finally(() => {
+                if(mountedRef.current) {
+                    setLoading(false); 
+                 }
+            });
+        
+    }
+
+    const getProjectDocs = (proj_id) => {
+        DocumentDataService.getByProjID(proj_id)
+            .then(response => {
+                if(mountedRef.current) {
+                    setLoading(true);
+                    setProjectDocs(response.data);
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            .finally(() => {
+                if(mountedRef.current) {
+                   setLoading(false); 
+                }
             });
     }
 
+    // Unmount and cleanup
+    useEffect(() => {
+        mountedRef.current = true;
+        return () => {
+            mountedRef.current = false;
+        }
+    }, []);
+
     // Replaces React class lifecycle methods like componentDidMount, componentDidUpdate and componentWillUnmount
     useEffect(() => {
-        getProjects();  // first render
-        if (reload) {
-            getProjects();
+        // Runs everytime 'reload' changes state to re-render the components
+        getProjects();
+        if(mountedRef.current) {
             setReload(false);
         }
+        
     }, [reload]);
+
+    
 
     return (
         <Grid
@@ -189,16 +274,19 @@ export default function ProjectsPage() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {projects.length > 0 ? projects.map((project) => (
+                                    {console.log("PROJECTS DATA", projects), console.log("PROJECT DOCS", projectDocs), projects.length > 0 ? projects.map((project) => (
                                         <StyledTableRow key={project.proj_id}>
                                             <StyledTableCell align="left">{project.proj_id}</StyledTableCell>
                                             <StyledTableCell component="th" scope="row">
-                                                <Link to={location.pathname + "/" + project.proj_name.toLowerCase().replace(" ", "-")}>
+                                                <Link to={{
+                                                    pathname: location.pathname + "/" + project.proj_name.toLowerCase().replace(" ", "-"),
+                                                    state: {projId: project.proj_id, projName: project.proj_name},
+                                                }} onClick={() => getProjectDocs(project.proj_id)}>
                                                     {project.proj_name}
                                                 </Link>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">{project.manager}</StyledTableCell>
-                                            <StyledTableCell align="center">{project.n_documents}</StyledTableCell>
+                                            <StyledTableCell align="center">{project.nr_documents}</StyledTableCell>
                                             <StyledTableCell align="center">{project.n_members}</StyledTableCell>
                                             <StatusStyledCell align="center">{project.status}</StatusStyledCell>
                                             <StyledTableCell align="center">

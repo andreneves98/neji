@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Add member to a project: [POST] api/project_members
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.proj_id && !req.body.member_id && !req.body.role) {
+    if (!req.body.proj_id && !req.body.username && !req.body.role) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -15,7 +15,7 @@ exports.create = (req, res) => {
     // Participates relation
     const participates = {
         proj_id: req.body.proj_id,
-        member_id: req.body.member_id,
+        username: req.body.username,
         role: req.body.role,
     }
 
@@ -60,13 +60,13 @@ exports.findOne = (req, res) => {
         });
 };
 
-// Remove a Member from a project: [DELETE] api/project_members?member_id=member_id&proj_id=proj_id
+// Remove a Member from a project: [DELETE] api/project_members?username=username&proj_id=proj_id
 exports.delete = (req, res) => {
-    const member_id = req.query.member_id;
+    const username = req.query.username;
     const proj_id = req.query.proj_id;
 
     Participates.destroy({
-        where: { member_id: member_id, proj_id: proj_id}
+        where: { username: username, proj_id: proj_id}
     })
         .then(num => {
             if (num == 1) {
@@ -75,14 +75,14 @@ exports.delete = (req, res) => {
                 });
             } else {
                 res.send({
-                    message: `Cannot remove Member with member_id=${member_id} from project=${proj_id}. 
+                    message: `Cannot remove Member with username=${username} from project=${proj_id}. 
                         Maybe Member does not participate in that project or the project does not exist!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not remove Member with member_id=" + member_id + " from the project"
+                message: "Could not remove Member with username=" + username + " from the project"
             });
         });
 };

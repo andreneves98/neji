@@ -12,6 +12,9 @@ module.exports = app => {
     // Retrieve a single document with title
     router.get("/:doc_id", documents.findOne);
 
+    // Count number of documents belonging to a project
+    router.get("/count?proj_id=:proj_id", documents.countDocs);
+
     // Update a document by id
     router.put("/:doc_id", documents.updateByID);
 

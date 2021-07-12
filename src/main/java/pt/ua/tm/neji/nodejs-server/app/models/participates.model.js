@@ -1,5 +1,5 @@
 // This Sequelize Model represents a Participates table in PostgreSQL database. 
-// These columns will be generated automatically: proj_id, member_id, createdAt, updatedAt.
+// These columns will be generated automatically: proj_id, username, createdAt, updatedAt.
 
 module.exports = (sequelize, Sequelize) => {
     const Participates = sequelize.define("participates", {
@@ -16,12 +16,12 @@ module.exports = (sequelize, Sequelize) => {
             onUpdate: 'CASCADE'
         },
         // foreign key from Member
-        member_id: {
-            type: Sequelize.UUID,
+        username: {
+            type: Sequelize.STRING,
             primaryKey: true,
             references: {
                 model: 'members',
-                key: 'member_id',
+                key: 'username',
                 deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
             },
             onDelete: 'CASCADE',

@@ -1,12 +1,11 @@
 // This Sequelize Model represents a Member table in PostgreSQL database. 
-// These columns will be generated automatically: member_id, first_name, last_name, createdAt, updatedAt.
+// These columns will be generated automatically: username, first_name, last_name, email, createdAt, updatedAt.
 
 module.exports = (sequelize, Sequelize) => {
     const Member = sequelize.define("members", {
-        member_id: {
-            type: Sequelize.UUID,
+        username: {
+            type: Sequelize.STRING,
             primaryKey: true,
-            defaultValue: Sequelize.UUIDV4
         },
         first_name: {
             type: Sequelize.STRING,
