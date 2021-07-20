@@ -39,7 +39,7 @@ exports.findAll = (req, res) => {
     const doc_id = req.query.doc_id;
     var condition = doc_id ? { doc_id: { [Op.iLike]: `%${doc_id}%` } } : null;
 
-    Annotation.findAll({ where: { doc_id: doc_id} })
+    Annotation.findAll({ where: { condition } })
     .then(data => {
         res.send(data);
     })

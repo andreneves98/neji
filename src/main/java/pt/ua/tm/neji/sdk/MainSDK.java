@@ -43,16 +43,16 @@ import pt.ua.tm.neji.writer.JSONWriter;
 
 public class MainSDK {
     
-    public static void main(String[] args) throws NejiException, IOException {
+    //public static void main(String[] args) throws NejiException, IOException {
 
-    /*private String documentFile, outputFile;
+    private String documentFile, outputFile;
 
     public MainSDK(String folderCorpusIn, String folderCorpusOut) {
         this.documentFile = folderCorpusIn;
         this.outputFile = folderCorpusOut;
     }
 
-    public void runSDK() throws NejiException, IOException {*/
+    public void runSDK() throws NejiException, IOException {
         // Set files
 
         /* Usagi variables */
@@ -75,11 +75,11 @@ public class MainSDK {
        
         NejiSDK(documentFile, outputFile, dictionary1File, dictionary2File, modelFile);
         List<String> nejiOut = parseJSONOutput(outputFile);
-        usagiIndex();
-        searchTerms(nejiOut);
+        //usagiIndex();
+        //searchTerms(nejiOut);
     }
 
-    public static void NejiSDK(String documentFile, String outputFile, String dictionary1File, String dictionary2File, String modelFile) throws NejiException, IOException {
+    public void NejiSDK(String documentFile, String outputFile, String dictionary1File, String dictionary2File, String modelFile) throws NejiException, IOException {
 
         // Create reader
         RawReader reader = new RawReader();

@@ -192,8 +192,15 @@ export default function CustomizedTabs() {
     const [projectDocs, setProjectDocs] = React.useState([]);
     const [projName, setProjName] = React.useState(null);
     const [projId, setProjId] = React.useState(null);
+    const [description, setDescription] = React.useState(null);
     const [reload, setReload] = React.useState(false);
+    const [selectedFile, setSelectedFile] = React.useState(null);
+    const [fileContent, setFileContent] = React.useState("");
+
     const mountedRef = React.useRef(false);
+
+    // https://medium.com/web-dev-survey-from-kyoto/how-to-customize-the-file-upload-button-in-react-b3866a5973d8
+    const hiddenFileInput = React.useRef(null);
 
     const handleAnnotationClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -203,17 +210,53 @@ export default function CustomizedTabs() {
         setAnchorEl(null);
     };
 
-    const handleChange = (event, newValue) => {
+    const handleTabsChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const handleUploadChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+        e.preventDefault();
+        console.log(selectedFile);
+
+        const reader = new FileReader();
+        reader.readAsText(e.target.files[0]);
+        reader.onloadend = getFileContent;
+    }
+
+    const handleUploadClick = (e) => {
+        hiddenFileInput.current.click();
+    }
+
+    const getFileContent = (e) => {
+        const content = e.target.result;
+        console.log(content);
+        setFileContent(content);
+    }
+
+    const handleUpdatedAt = (updatedAt) => {
+        var temp = updatedAt.split("T")[0];
+        var today = new Date();
+        var lastUpdate = new Date(temp);
+
+        const utc1 = Date.UTC(lastUpdate.getFullYear(), lastUpdate.getMonth(), lastUpdate.getDate());
+        const utc2 = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+
+        return Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
+    }
+
     const getProjectDocs = () => {
         console.log("GET PROJECT DOCS");
+        var data;
         DocumentDataService.getByProjID(state.projId)
             .then(response => {
-                if(mountedRef.current) {
+                if (mountedRef.current) {
                     setProjectDocs(response.data);
                 }
+                data = response.data;
+
+                // Fetch the number of annotations from each document
+                //data.forEach((document, index) => {})
             })
             .catch(e => {
                 console.log(e);
@@ -230,20 +273,21 @@ export default function CustomizedTabs() {
 
     // Update project name and ID to fetch the data
     useEffect(() => {
-        if(mountedRef.current) {
+        if (mountedRef.current) {
             setProjName(state.projName);
             setProjId(state.projId);
+            setDescription(state.description);
         }
-    }, [state.projName, state.projId]);
+    }, [state.projName, state.projId, state.description]);
 
     // Replaces React class lifecycle methods like componentDidMount, componentDidUpdate and componentWillUnmount
     useEffect(() => {
         // Runs everytime 'reload' changes state to re-render the components
         getProjectDocs();
-        if(mountedRef.current) {
+        if (mountedRef.current) {
             setReload(false);
         }
-        
+
     }, [reload]);
 
     const documentsTab = () => {
@@ -273,7 +317,7 @@ export default function CustomizedTabs() {
                                                 <StyledTableCell component="th" scope="row" align="left">{doc.doc_id}</StyledTableCell>
                                                 <StyledTableCell align="left">{doc.title}</StyledTableCell>
                                                 <StyledTableCell align="center">{null}</StyledTableCell>
-                                                <StyledTableCell align="center">{doc.updatedAt}</StyledTableCell>
+                                                <StyledTableCell align="center">{handleUpdatedAt(doc.updatedAt)} days ago</StyledTableCell>
                                                 <StyledTableCell align="center">
                                                     <Grid container direction="row" justify="center">
                                                         <Grid item>
@@ -297,9 +341,18 @@ export default function CustomizedTabs() {
                 <Grid item>
                     <Grid container direction="row" spacing={1}>
                         <Grid item>
-                            <Button variant="contained" color="secondary" startIcon={<PublishRoundedIcon />}>
-                                Upload
-                            </Button>
+                            <form>
+                                <Button variant="contained" color="secondary" startIcon={<PublishRoundedIcon />} onClick={handleUploadClick}>
+                                    Upload
+                                </Button>
+                                <input
+                                    type="file"
+                                    style={{ display: 'none' }}
+                                    ref={hiddenFileInput}
+                                    onChange={handleUploadChange}
+                                />
+                            </form>
+
                         </Grid>
                         <Grid item xs />
                         <Grid item>
@@ -457,12 +510,22 @@ export default function CustomizedTabs() {
     return (
         <div className={classes.root}>
             <div style={{ paddingBottom: '20px' }}>
-                <Button onClick={history.goBack} variant="contained" style={{ backgroundColor: "black", color: "white" }} startIcon={<ArrowBackIcon />}>
-                    Back
-                </Button>
+                <Grid container direction="column" justify="left" spacing={1}>
+                    <Grid item>
+                        <Button onClick={history.goBack} variant="contained" style={{ backgroundColor: "black", color: "white" }} startIcon={<ArrowBackIcon />}>
+                            Back
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" style={{ fontWeight: "bold"}}>
+                            Description: {description}
+                        </Typography>
+                    </Grid>
+                </Grid>
+
             </div>
             <div className={classes.style}>
-                <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
+                <StyledTabs value={value} onChange={handleTabsChange} aria-label="styled tabs example">
                     <StyledTab label="Documents" {...a11yProps(0)} />
                     <StyledTab label="Members" {...a11yProps(1)} />
                     <StyledTab label="Types" {...a11yProps(2)} />

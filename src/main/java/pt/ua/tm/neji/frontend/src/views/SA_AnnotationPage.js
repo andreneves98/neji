@@ -22,6 +22,7 @@ import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from
 //import { Document, Page } from 'react-pdf/build/entry.noworker';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 
+
 const styles = (theme) => ({
     paper: {
         //minHeight: 400,
@@ -220,7 +221,7 @@ function SA_AnnotationPage(props) {
                                                 </div>
                                                 
     </Resizable>*/}
-                                        {/*<TextField
+                                        <TextField
                                             id="annotation-text-box"
                                             multiline
                                             fullWidth
@@ -228,8 +229,8 @@ function SA_AnnotationPage(props) {
                                             placeholder="Load or copy a text file to start annotating"
                                             margin="none"
                                             value={selectedFile ? fileContent : ""}
-                                        />*/}
-                                        <div>
+                                        />
+                                        {/*<div>
                                             <Document
                                                 file={selectedFile}
                                                 onLoadSuccess={onPDFLoadSuccess}
@@ -248,7 +249,7 @@ function SA_AnnotationPage(props) {
                                             >
                                                 Next
                                             </button>
-                                        </div>
+                                        </div>*/}
                                     </div>
                                 </Paper>
                             </Grid>

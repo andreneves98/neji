@@ -88,7 +88,6 @@ export default function ProjectsPage() {
     const [name, setName] = React.useState("");
     const [description, setDescription] = React.useState(null);
     const [projects, setProjects] = React.useState([]);
-    const [projectDocs, setProjectDocs] = React.useState([]);
     const [reload, setReload] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const mountedRef = React.useRef(false); // this ref will track if the component is mounted
@@ -213,24 +212,6 @@ export default function ProjectsPage() {
         
     }
 
-    const getProjectDocs = (proj_id) => {
-        DocumentDataService.getByProjID(proj_id)
-            .then(response => {
-                if(mountedRef.current) {
-                    setLoading(true);
-                    setProjectDocs(response.data);
-                }
-            })
-            .catch(e => {
-                console.log(e);
-            })
-            .finally(() => {
-                if(mountedRef.current) {
-                   setLoading(false); 
-                }
-            });
-    }
-
     // Unmount and cleanup
     useEffect(() => {
         mountedRef.current = true;
@@ -248,8 +229,6 @@ export default function ProjectsPage() {
         }
         
     }, [reload]);
-
-    
 
     return (
         <Grid
@@ -274,14 +253,14 @@ export default function ProjectsPage() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {console.log("PROJECTS DATA", projects), console.log("PROJECT DOCS", projectDocs), projects.length > 0 ? projects.map((project) => (
+                                    {console.log("PROJECTS DATA", projects), projects.length > 0 ? projects.map((project) => (
                                         <StyledTableRow key={project.proj_id}>
                                             <StyledTableCell align="left">{project.proj_id}</StyledTableCell>
                                             <StyledTableCell component="th" scope="row">
                                                 <Link to={{
                                                     pathname: location.pathname + "/" + project.proj_name.toLowerCase().replace(" ", "-"),
-                                                    state: {projId: project.proj_id, projName: project.proj_name},
-                                                }} onClick={() => getProjectDocs(project.proj_id)}>
+                                                    state: {projId: project.proj_id, projName: project.proj_name, description: project.description},
+                                                }}>
                                                     {project.proj_name}
                                                 </Link>
                                             </StyledTableCell>

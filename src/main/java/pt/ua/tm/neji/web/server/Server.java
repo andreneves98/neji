@@ -15,7 +15,7 @@
 
 package pt.ua.tm.neji.web.server;
 
-import org.apache.commons.collections.ListUtils;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jetty.security.JDBCLoginService;
@@ -47,6 +47,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
 
 import static pt.ua.tm.neji.web.WebConstants.*;
 
